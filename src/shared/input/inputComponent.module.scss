@@ -1,0 +1,20 @@
+@import "src/shared/theme/variables";
+
+.header {
+  border: 1px solid $primary-color;
+  height: 55px;
+  border-radius: 12px;
+
+  padding: 24px 19px;
+}
+
+.header[type='text'],
+.header[type='email'] {
+  color: #000;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.header:focus {
+  outline: 1px solid $primary-color-hover;
+}

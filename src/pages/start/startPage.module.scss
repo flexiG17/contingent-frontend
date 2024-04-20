@@ -1,3 +1,5 @@
+@import "src/shared/theme/variables";
+
 .grid {
   display: flex;
   flex-direction: row;
@@ -32,15 +34,13 @@
     gap: 10px;
 
     h1 {
-      font-family: Montserrat, sans-serif;
-      color: #FA7A45;
+      color: $primary-color;
       font-size: 45px;
       font-weight: 500;
     }
 
     p {
-      font-family: Montserrat, sans-serif;
-      color: #FA7A45;
+      color: $primary-color;
       font-size: 20px;
       font-weight: 500;
     }
@@ -53,8 +53,7 @@
     align-items: center;
 
     &_text {
-      font-family: Montserrat, sans-serif;
-      color: #FA7A45;
+      color: $primary-color;
       font-size: 20px;
       font-weight: 500;
     }

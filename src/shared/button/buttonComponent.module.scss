@@ -1,8 +1,10 @@
+@import "src/shared/theme/variables";
+
 .button {
   width: 100%;
   padding: 13px 24px;
   border: none;
-  background: #FA7A45;
+  background: $primary-color;
   border-radius: 8px;
   cursor: pointer;
   text-decoration: none;
@@ -19,6 +21,6 @@
 }
 
 .button:hover {
-  background-color: #fc5b1d;
+  background-color: $primary-color-hover;
   color: white;
 }

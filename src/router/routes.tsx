@@ -2,6 +2,7 @@ import {createBrowserRouter} from "react-router-dom";
 import StartPage from "../pages/start/StartPage";
 import {Paths} from "./paths";
 import LoginPage from "../pages/login/LoginPage";
+import MainPage from "../pages/main/MainPage";
 
 export const Routes = createBrowserRouter([
     {
@@ -11,5 +12,9 @@ export const Routes = createBrowserRouter([
     {
         path: Paths.LOGIN,
         element: <LoginPage/>
+    },
+    {
+        path: Paths.MAIN,
+        element: <MainPage/>
     },
 ])

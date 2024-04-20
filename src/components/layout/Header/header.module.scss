@@ -1,0 +1,42 @@
+@import "src/shared/theme/variables";
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &_nav {
+    margin-top: 50px;
+    display: flex;
+    gap: 80px;
+
+    &_link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      padding-bottom: 5px;
+      position: relative;
+
+      h5 {
+        color: $primary-color;
+        font-size: 18px;
+        font-weight: 500;
+      }
+    }
+
+    &_link::before {
+      content: '';
+      bottom: -6px;
+      position: absolute;
+      width: 0;
+      height: 2px;
+      background-color: $primary-color;
+      transition: 0.5s;
+    }
+
+    &_link:hover:before {
+      width: 105%;
+    }
+  }
+}

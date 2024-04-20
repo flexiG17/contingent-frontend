@@ -1,4 +1,5 @@
 export enum Paths {
-    START = '/',
-    LOGIN = '/login'
+    START = '/start',
+    LOGIN = '/login',
+    MAIN = '/',
 }
