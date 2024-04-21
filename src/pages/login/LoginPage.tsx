@@ -14,7 +14,7 @@ const LoginPage = () => {
 
     return (
         <section className={styles.grid}>
-            <div className={styles.block}>
+            <div className={styles.header}>
                 <img src={MainLogo} alt='Главное лого' width={250} height={180}/>
                 <LoginForm setData={setData} register={register} handleSubmit={handleSubmit}/>
             </div>

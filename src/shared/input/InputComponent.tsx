@@ -7,7 +7,7 @@ const InputComponent = (props: InputPropsInterface) => {
     return (
         <>
             <input
-                className={styles.block}
+                className={styles.header}
                 type={props.type}
                 placeholder={GetPlaceholder(props.type, props.fieldName)}
                 {...props.register(props.fieldName, { required: true })}
