@@ -26,7 +26,7 @@ const LoginForm = ({setData, register, handleSubmit}: {
                 </div>
             </div>
             <div className={styles.grid_button}>
-                <ButtonComponent text={'Войти'} path={'main'}/>
+                <ButtonComponent text={'Войти'} navigatePath={'main'}/>
             </div>
         </form>
     )

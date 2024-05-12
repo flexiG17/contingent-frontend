@@ -1,9 +1,8 @@
-import React, {useEffect, useState} from 'react'
+import React, {Dispatch, SetStateAction, useEffect, useState} from 'react'
 import styles from './tableComponent.module.scss'
-import TableHeaderComponent from "./header/TableHeaderComponent";
-import TablePaginationComponent from "./pagination/TablePaginationComponent";
 import TableBodyComponent from "./body/TableBodyComponent";
 import {GetProp, TableProps} from "antd";
+import {StudentsDataToDisplay} from "../../../utils/const";
 
 type TablePaginationConfig = Exclude<GetProp<TableProps, 'pagination'>, boolean>;
 export interface TableParams {
@@ -13,11 +12,16 @@ export interface TableParams {
     filters?: Parameters<GetProp<TableProps, 'onChange'>>[1];
 }
 
-const TableComponent = () => {
+interface InputProps {
+    data: any[],
+    setData: React.Dispatch<React.SetStateAction<any[]>>,
+}
+const TableComponent = ({data, setData} : InputProps) => {
     const [tableParams, setTableParams] = useState<TableParams>({
         pagination: {
             current: 1,
-            pageSize: 2,
+            pageSize: 10,
+            pageSizeOptions: ['10', '25', '50', '100', data.length.toString()]
         },
     });
 
@@ -26,7 +30,7 @@ const TableComponent = () => {
             ...tableParams,
             pagination: {
                 ...tableParams.pagination,
-                total: 2,
+                total: data.length,
                 // 200 is mock data, you should read it from server
                 // total: data.totalCount,
             },
@@ -38,10 +42,12 @@ const TableComponent = () => {
     }, [tableParams.pagination?.current, tableParams.pagination?.pageSize]);
 
     return (
-        <section className={styles.grid}>
-            <TableHeaderComponent/>
-            <TableBodyComponent tableParams={tableParams} setTableParams={setTableParams}/>
-            <TablePaginationComponent/>
+        <section className={styles.block}>
+            <TableBodyComponent
+                data={data}
+                setData={setData}
+                tableParams={tableParams}
+                setTableParams={setTableParams}/>
         </section>
     )
 }

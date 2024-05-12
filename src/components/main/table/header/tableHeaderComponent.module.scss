@@ -1,5 +1,36 @@
+@import "src/shared/theme/variables.module";
+
 .grid {
   display: flex;
   align-items: center;
   height: 75px;
+  padding: 30px 15px ;
+}
+
+.import_button {
+  margin-left: auto;
+  margin-right: -15px;
+}
+
+.block {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+
+  &_icons {
+    display: flex;
+    gap: 30px;
+
+    .icon {
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      transition: 0.3s;
+      fill: rgb(0,0,0,0);
+    }
+
+    .icon:hover {
+      fill: $background-color-hover,
+    }
+  }
 }

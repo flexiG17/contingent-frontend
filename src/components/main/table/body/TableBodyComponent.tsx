@@ -1,59 +1,23 @@
-import React, {Dispatch, SetStateAction, useEffect, useRef, useState} from 'react';
-import {SearchOutlined} from '@ant-design/icons';
-import type {GetProp, InputRef, TableColumnsType, TableColumnType, TableProps} from 'antd';
-import {Button, Input, Space, Table} from 'antd';
-import type {FilterDropdownProps} from 'antd/es/table/interface';
-import Highlighter from 'react-highlight-words';
-import styles from './tableBodyComponent.module.scss'
+import React, {Dispatch, SetStateAction, useEffect, useState} from 'react';
 import {TableParams} from "../TableComponent";
-import {DataIndex, GetTableColumns} from "./getTableColumns";
-import {TableColumnsInterface} from "../interfaces/tableColumnsInterface";
+import {TableElement} from "./table/TableElement";
+import styles from './tableBodyComponent.module.scss'
+import {StudentsDataToDisplay} from "../../../../utils/const";
+import MobileTable from "./mobile/MobileTable";
+import TableHeaderComponent from "../header/TableHeaderComponent";
 
-const data: TableColumnsInterface[] = [
-    {
-        key: '1',
-        date_creation: new Date().toLocaleDateString(),
-        education_type: "Квота",
-        educational_program: '1008 (1 год)',
-        latin_name: 'John Brown',
-        russian_name: 'Джон Браун',
-        country: 'Египет',
-        gender: 'Мужской',
-        contract_number: 'какой-то там номер',
-        payment_status: 'Оплачено',
-        enrollment_order: '124123',
-        enrollment_status: "Зачислен"
-    },
-    {
-        key: '2',
-        date_creation: new Date().toLocaleDateString(),
-        education_type: "Контракт",
-        educational_program: '256 (24-25 г.)',
-        latin_name: 'Andrey Bushuev',
-        russian_name: 'Андрей Бушуев',
-        country: 'Россия',
-        gender: 'Мужской',
-        contract_number: 'какой-то там номер',
-        payment_status: 'Оплачено частично',
-        enrollment_order: '124123',
-        enrollment_status: "Не зачислен"
-    },
-];
-
-const TableBodyComponent = ({tableParams, setTableParams}: {
+interface InputProps {
     tableParams: TableParams,
-    setTableParams: Dispatch<SetStateAction<TableParams>>
-}) => {
+    setTableParams: Dispatch<SetStateAction<TableParams>>,
+
+    data: any[],
+    setData: React.Dispatch<React.SetStateAction<any[]>>,
+}
+
+const TableBodyComponent = ({tableParams, setTableParams, data, setData}: InputProps) => {
 
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-    const handleTableChange: TableProps['onChange'] = (pagination, filters, sorter) => {
-        setTableParams({
-            pagination,
-            filters,
-            ...sorter,
-        });
-    }
-
+    const [isLoading, setIsLoading] = useState(true)
     const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
         setSelectedRowKeys(newSelectedRowKeys);
     };
@@ -62,20 +26,26 @@ const TableBodyComponent = ({tableParams, setTableParams}: {
         selectedRowKeys,
         onChange: onSelectChange,
     };
-    const hasSelected = selectedRowKeys.length > 0;
 
     return <>
-        <span style={{marginLeft: 8}}>
-          {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
-        </span>
-        <Table
-            rowSelection={rowSelection}
-            rowKey={(record) => record.key}
-            columns={GetTableColumns()}
-            dataSource={data}
-            pagination={tableParams.pagination}
-            onChange={handleTableChange}
-        />
+        <div className={styles.mobile_table}>
+            {/*<TableHeaderComponent selectedRowKeys={rowSelection.selectedRowKeys!}/>*/}
+            {StudentsDataToDisplay.map((student) => {
+                return <MobileTable student={student}/>
+            })}
+        </div>
+        <div className={styles.desktop_table}>
+            <TableHeaderComponent usersList={data} isLoading={isLoading} selectedRowKeys={selectedRowKeys} setIsLoading={setIsLoading}/>
+            <TableElement
+                data={data}
+                setData={setData}
+                rowSelection={rowSelection}
+                tableParams={tableParams}
+                setTableParams={setTableParams}
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
+            />
+        </div>
     </>;
 }
 

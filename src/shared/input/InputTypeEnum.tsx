@@ -2,5 +2,7 @@ export enum InputTypeEnum {
     TEXT = 'text',
     EMAIL = 'email',
     PASSWORD = 'password',
-    DATE = 'date'
+    DATE = 'date',
+    PHONE_NUMBER = 'tel',
+    SELECT = 'select'
 }

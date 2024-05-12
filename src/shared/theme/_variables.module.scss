@@ -1,0 +1,13 @@
+$primary-color: #FA7A45;
+$primary-color-hover: #ff6629;
+$background-color: #FFF6F0;
+$background-color-hover: rgba(250, 122, 69, 0.15);
+$border-color: #E0E0E0;
+
+:export {
+  primaryColor: $primary-color;
+  primaryColorHover: $primary-color-hover;
+  backgroundColor: $background-color;
+  backgroundColorHover: $background-color-hover;
+  borderColor: $border-color
+}

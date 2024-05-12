@@ -2,7 +2,7 @@ import React from "react";
 import styles from './startPage.module.scss'
 import MainLogo from '../../assets/main_logo.svg'
 import ButtonComponent from "../../shared/button/ButtonComponent";
-import {Paths} from "../../router/paths";
+import {PathsEnum} from "../../router/pathsEnum";
 const StartPage = () => {
     return (
         <section className={styles.grid}>
@@ -20,7 +20,7 @@ const StartPage = () => {
                     <p className={styles.grid_rightBlock_text}>
                         Вход ПОдИУ УрФУ
                     </p>
-                    <ButtonComponent text={'Войти'} path={Paths.LOGIN}/>
+                    <ButtonComponent text={'Войти'} navigatePath={PathsEnum.LOGIN}/>
                 </div>
             </div>
         </section>

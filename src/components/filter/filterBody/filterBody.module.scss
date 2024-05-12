@@ -1,0 +1,125 @@
+.filter_container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 817px;
+  height: 50px;
+  align-items: center;
+  margin-left: 30px;
+}
+
+.first_parameter {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  width: 300px;
+}
+
+.second_parameter {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  margin-left: 15px;
+  width: 300px;
+}
+
+.third_parameter {
+  margin-left: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.search_filter {
+  height: 35px;
+  outline: none;
+  border: 1px solid #CCCCCC;
+  border-radius: 5px;
+  width: 190px;
+  padding-left: 10px;
+
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: default;
+}
+
+.filter_button {
+  margin-left: 5px;
+  background-color: #fff;
+  cursor: pointer;
+  width: 42px;
+  border: none;
+  background-color: #FA7A45;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: #fff;
+}
+
+.filter_button:hover {
+  background-color: #FF4B00;
+}
+
+.add_filter_button {
+  height: 40px;
+  width: 150px;
+  background-color: #FA7A45;
+  border: none;
+  border-radius: 5px;
+  color: #ffffff;
+
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+
+  cursor: pointer;
+
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.add_filter_button:hover {
+  background-color: #FF4B00;
+}
+
+.delete_filter_button {
+  margin-left: 15px;
+
+  padding: 6px 2px;
+  background-color: #FA7A45;
+  border: none;
+  border-radius: 5px;
+  color: #ffffff;
+
+  cursor: pointer;
+}
+
+.delete_filter_button:hover {
+  background-color: #ff6629;
+}
+
+.button_position {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 818px;
+  padding-left: 45px;
+  margin-top: 20px;
+  margin-bottom: 55px;
+}
+
+.date_picker_filter{
+  z-index: 2;
+  width: 185px;
+  height: 30px;
+
+
+  font-size: 14px;
+  font-weight: 500;
+  font-family: 'Montserrat', sans-serif;
+
+  padding-left: 15px;
+  border: solid 1px #C4C4C4;
+  border-radius: 5px;
+}

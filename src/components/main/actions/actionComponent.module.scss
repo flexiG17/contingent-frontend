@@ -1,4 +1,4 @@
-@import "src/shared/theme/variables";
+@import "../../../shared/theme/variables.module";
 $action-border-radius: 8px;
 
 .block {
@@ -25,9 +25,7 @@ $action-border-radius: 8px;
   }
 
   button:hover {
-    background: #fff0f0;
-    border: 1px solid $primary-color-hover;
-    color: $primary-color-hover;
+    background: $background-color-hover;
   }
 
   button:first-child {

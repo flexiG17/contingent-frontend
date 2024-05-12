@@ -1,0 +1,33 @@
+.file_list{
+  margin: 20px 0;
+}
+
+.file_list_header{
+  display: grid;
+  grid-template-columns: 1fr 4fr 2fr 2fr;
+
+  p {
+    font-size: 16px;
+    font-weight: 600;
+  }
+}
+
+.file_list_name{
+  grid-column-start: 2;
+}
+
+.file_list_date{
+  grid-column-start: 3;
+  justify-self: center;
+}
+
+.file_list_size{
+  grid-column-start: 4;
+  justify-self: center;
+}
+
+@media (max-width: 450px) {
+  .file_list_date{
+    display: none;
+  }
+}

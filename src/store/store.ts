@@ -1,10 +1,18 @@
-import {configureStore} from "@reduxjs/toolkit";
-import {login} from "./auth/authSlice";
+import { configureStore } from '@reduxjs/toolkit'
+import studentReducer from '../features/student/studentSlice'
+import userReducer from '../features/user/userSlice'
+import tableReducer from '../features/table/tableSlice'
+import fileReducer from '../features/file/fileSlice'
+import mailReducer from '../features/mail/mailSlice'
 
 export const store = configureStore({
     reducer: {
-
-    }
+        student: studentReducer,
+        user: userReducer,
+        table: tableReducer,
+        mail: mailReducer,
+        file: fileReducer
+    },
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

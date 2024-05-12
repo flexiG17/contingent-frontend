@@ -1,6 +1,6 @@
-@import 'src/shared/theme/variables';
+@import '../../../shared/theme/variables.module';
 
-.grid {
+.block {
   border-top: 1px solid $primary-color;
   border-bottom: 1px solid $primary-color;
 }

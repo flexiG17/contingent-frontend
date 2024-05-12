@@ -1,20 +1,29 @@
 import {createBrowserRouter} from "react-router-dom";
 import StartPage from "../pages/start/StartPage";
-import {Paths} from "./paths";
+import {PathsEnum} from "./pathsEnum";
 import LoginPage from "../pages/login/LoginPage";
 import MainPage from "../pages/main/MainPage";
+import CreateStudentPage from "../pages/createStudent/CreateStudentPage";
 
 export const Routes = createBrowserRouter([
     {
-        path: Paths.START,
+        path: PathsEnum.START,
         element: <StartPage/>
     },
     {
-        path: Paths.LOGIN,
+        path: PathsEnum.LOGIN,
         element: <LoginPage/>
     },
     {
-        path: Paths.MAIN,
+        path: PathsEnum.MAIN,
         element: <MainPage/>
+    },
+    {
+        path: PathsEnum.CREATE_STUDENT,
+        element: <CreateStudentPage/>
+    },
+    {
+        path: `${PathsEnum.STUDENT}/:id`,
+        element: <CreateStudentPage/>
     },
 ])

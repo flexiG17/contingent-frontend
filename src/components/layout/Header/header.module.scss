@@ -1,9 +1,22 @@
-@import "src/shared/theme/variables";
+@import "../../../shared/theme/variables.module";
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  &_menu_icon {
+    display: none;
+    color: $primary-color;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    transition: 0.5s;
+
+    &:active {
+      transform: rotate(180deg);
+    }
+  }
 
   &_nav {
     margin-top: 50px;
@@ -37,6 +50,31 @@
 
     &_link:hover:before {
       width: 105%;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    &_nav {
+      gap: 30px;
+
+      &_link {
+        h5 {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .header {
+    &_menu_icon {
+      display: flex;
+    }
+    &_nav {
+      display: none;
     }
   }
 }

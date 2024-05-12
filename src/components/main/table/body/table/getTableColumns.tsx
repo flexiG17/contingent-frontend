@@ -3,7 +3,7 @@ import {SearchOutlined} from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
 import React, {useState} from "react";
 import {FilterDropdownProps} from "antd/es/table/interface";
-import {TableColumnsInterface} from "../interfaces/tableColumnsInterface";
+import {TableColumnsInterface} from "../../interfaces/tableColumnsInterface";
 
 export type DataIndex = keyof TableColumnsInterface;
 
@@ -109,7 +109,6 @@ export const GetTableColumns = (): TableColumnsType<TableColumnsInterface> => {
             title: 'Дата создания',
             dataIndex: 'date_creation',
             key: 'date_creation',
-            /*width: '30%',*/
             ...getColumnSearchProps('date_creation'),
         },
         {
@@ -131,7 +130,8 @@ export const GetTableColumns = (): TableColumnsType<TableColumnsInterface> => {
         },
         {
             title: 'Кол-во часов',
-            dataIndex: 'educational_program',
+            // dataIndex: 'educational_program',
+            dataIndex: 'hours_number',
             key: 'educational_program',
             ...getColumnSearchProps('educational_program'),
             sorter: (a, b) => a.educational_program.length - b.educational_program.length,
@@ -141,12 +141,14 @@ export const GetTableColumns = (): TableColumnsType<TableColumnsInterface> => {
             title: 'ФИО (лат.)',
             dataIndex: 'latin_name',
             key: 'latin_name',
+            width: '13%',
             ...getColumnSearchProps('latin_name'),
         },
         {
             title: 'ФИО (кир.)',
             dataIndex: 'russian_name',
             key: 'russian_name',
+            width: '13%',
             ...getColumnSearchProps('russian_name'),
         },
         {
@@ -159,7 +161,17 @@ export const GetTableColumns = (): TableColumnsType<TableColumnsInterface> => {
             title: 'Пол',
             dataIndex: 'gender',
             key: 'gender',
-            ...getColumnSearchProps('gender'),
+            filters: [
+                {
+                    text: 'Мужской',
+                    value: 'Мужской',
+                },
+                {
+                    text: 'Женский',
+                    value: 'Женский',
+                },
+            ],
+            onFilter: (value, record) => record.gender.indexOf(value as string) === 0,
         },
         {
             title: '№ договора',
@@ -171,7 +183,21 @@ export const GetTableColumns = (): TableColumnsType<TableColumnsInterface> => {
             title: 'Статус оплаты',
             dataIndex: 'payment_status',
             key: 'payment_status',
-            ...getColumnSearchProps('payment_status'),
+            filters: [
+                {
+                    text: 'Оплачено',
+                    value: 'Оплачено',
+                },
+                {
+                    text: 'Не оплачено',
+                    value: 'Не оплачено',
+                },
+                {
+                    text: 'Оплачено частично',
+                    value: 'Оплачено частично',
+                },
+            ],
+            onFilter: (value, record) => record.payment_status.indexOf(value as string) === 0,
         },
         {
             title: '№ о зачислении',
@@ -181,9 +207,23 @@ export const GetTableColumns = (): TableColumnsType<TableColumnsInterface> => {
         },
         {
             title: 'Зачисление',
-            dataIndex: 'enrollment_status',
-            key: 'enrollment_status',
-            ...getColumnSearchProps('enrollment_status'),
+            dataIndex: 'enrollment',
+            key: 'enrollment',
+            filters: [
+                {
+                    text: 'Зачислен',
+                    value: 'Зачислен',
+                },
+                {
+                    text: 'Не зачислен',
+                    value: 'Не зачислен',
+                },
+                {
+                    text: 'Отчислен',
+                    value: 'Отчислен',
+                },
+            ],
+            onFilter: (value, record) => record.enrollment.indexOf(value as string) === 0,
         },
     ];
 }

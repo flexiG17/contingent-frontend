@@ -1,14 +1,27 @@
 .grid {
-  display: grid;
+  margin: 80px 170px;
+  /*display: grid;
   grid-template-columns: 1fr 5fr 1fr;
   grid-template-rows: 1fr 4fr 1fr;
   grid-column-gap: 0;
-  grid-row-gap: 0;
+  grid-row-gap: 0;*/
 }
 
 .body {
   display: flex;
   flex-direction: column;
   gap: 25px;
-  grid-area: 2 / 2 / 3 / 3;
+  // grid-area: 2 / 2 / 3 / 3;
+}
+
+@media (max-width: 1570px) {
+  .grid {
+    margin: 50px 80px;
+  }
+}
+
+@media (max-width: 1390px) {
+  .grid {
+    margin: 50px 50px;
+  }
 }

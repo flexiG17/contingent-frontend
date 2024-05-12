@@ -1,5 +1,4 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {GetProp, TableProps} from "antd";
 
 const tableSlice = createSlice({
     name: 'table',
@@ -29,5 +28,5 @@ const tableSlice = createSlice({
     },
 })
 
-export const { setTableChange } = tableSlice.actions
+export const { setTableChange, setSelectedRows } = tableSlice.actions
 export default tableSlice.reducer

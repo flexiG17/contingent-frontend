@@ -1,7 +1,7 @@
 import React from "react";
 
 export interface TableColumnsInterface {
-    key: React.Key;
+    id: React.Key;
     date_creation: string;
     education_type: "Квота" | "Контракт";
     educational_program: string;
@@ -12,5 +12,5 @@ export interface TableColumnsInterface {
     contract_number: string;
     payment_status: "Оплачено" | "Оплачено частично" | "Не оплачено";
     enrollment_order: string;
-    enrollment_status: "Зачислен" | "Отчислен" | "Не зачислен"
+    enrollment: "Зачислен" | "Отчислен" | "Не зачислен"
 }

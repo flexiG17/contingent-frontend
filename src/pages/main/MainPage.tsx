@@ -1,4 +1,4 @@
-import React from "react";
+import React, {SetStateAction, useState} from "react";
 import styles from './mainPage.module.scss'
 import Layout from "../../components/layout/Layout";
 import MainComponent from "../../components/main/MainComponent";

@@ -76,3 +76,108 @@ export const IconPlus = (props: React.SVGProps<SVGSVGElement>) => {
         </svg>
     );
 }
+
+export const IconMail = (props: React.SVGProps<SVGSVGElement>) => {
+    return (
+        <svg
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            height="1em"
+            width="1em"
+            {...props}
+        >
+            <path d="M2 7L10.1649 12.7154C10.8261 13.1783 11.1567 13.4097 11.5163 13.4993C11.8339 13.5785 12.1661 13.5785 12.4837 13.4993C12.8433 13.4097 13.1739 13.1783 13.8351 12.7154L22 7M6.8 20H17.2C18.8802 20 19.7202 20 20.362 19.673C20.9265 19.3854 21.3854 18.9265 21.673 18.362C22 17.7202 22 16.8802 22 15.2V8.8C22 7.11984 22 6.27976 21.673 5.63803C21.3854 5.07354 20.9265 4.6146 20.362 4.32698C19.7202 4 18.8802 4 17.2 4H6.8C5.11984 4 4.27976 4 3.63803 4.32698C3.07354 4.6146 2.6146 5.07354 2.32698 5.63803C2 6.27976 2 7.11984 2 8.8V15.2C2 16.8802 2 17.7202 2.32698 18.362C2.6146 18.9265 3.07354 19.3854 3.63803 19.673C4.27976 20 5.11984 20 6.8 20Z" stroke="#4A4745" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+    );
+}
+
+export const IconExport = (props: React.SVGProps<SVGSVGElement>) => {
+    return (
+        <svg
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            height="1em"
+            width="1em"
+            {...props}
+        >
+            <path d="M8 11.9999L12 15.9999M12 15.9999L16 11.9999M12 15.9999V6.79994C12 5.40923 12 4.71388 11.4495 3.93534C11.0837 3.41806 10.0306 2.77962 9.40278 2.69456C8.45789 2.56654 8.09907 2.75372 7.38143 3.12808C4.18333 4.79637 2 8.14318 2 11.9999C2 17.5228 6.47715 21.9999 12 21.9999C17.5228 21.9999 22 17.5228 22 11.9999C22 8.29853 19.989 5.06681 17 3.33776" stroke="#4A4745" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+    );
+}
+
+export const IconDelete = (props: React.SVGProps<SVGSVGElement>) => {
+    return (
+        <svg
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            height="1em"
+            width="1em"
+            {...props}
+        >
+            <path d="M16 6V5.2C16 4.0799 16 3.51984 15.782 3.09202C15.5903 2.71569 15.2843 2.40973 14.908 2.21799C14.4802 2 13.9201 2 12.8 2H11.2C10.0799 2 9.51984 2 9.09202 2.21799C8.71569 2.40973 8.40973 2.71569 8.21799 3.09202C8 3.51984 8 4.0799 8 5.2V6M3 6H21M19 6V17.2C19 18.8802 19 19.7202 18.673 20.362C18.3854 20.9265 17.9265 21.3854 17.362 21.673C16.7202 22 15.8802 22 14.2 22H9.8C8.11984 22 7.27976 22 6.63803 21.673C6.07354 21.3854 5.6146 20.9265 5.32698 20.362C5 19.7202 5 18.8802 5 17.2V6" stroke="#4A4745" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+    );
+}
+
+export const IconFile = (props: React.SVGProps<SVGSVGElement>) => {
+    return (
+        <svg
+            viewBox="0 0 1024 1024"
+            fill="currentColor"
+            height="1em"
+            width="1em"
+            {...props}
+        >
+            <path d="M854.6 288.7c6 6 9.4 14.1 9.4 22.6V928c0 17.7-14.3 32-32 32H192c-17.7 0-32-14.3-32-32V96c0-17.7 14.3-32 32-32h424.7c8.5 0 16.7 3.4 22.7 9.4l215.2 215.3zM790.2 326L602 137.8V326h188.2z" />
+        </svg>
+    );
+}
+
+export const MenuIcon = (props: React.SVGProps<SVGSVGElement>) => {
+    return (
+        <svg
+            viewBox="0 0 512 512"
+            fill="currentColor"
+            height="1em"
+            width="1em"
+            {...props}
+        >
+            <path
+                fill="none"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeMiterlimit={10}
+                strokeWidth={48}
+                d="M88 152h336M88 256h336M88 360h336"
+            />
+        </svg>
+    );
+}
+
+export const EditIcon = (props: React.SVGProps<SVGSVGElement>) => {
+    return (
+        <svg
+            viewBox="0 0 1024 1024"
+            fill="currentColor"
+            height="1em"
+            width="1em"
+            {...props}
+        >
+            <path d="M257.7 752c2 0 4-.2 6-.5L431.9 722c2-.4 3.9-1.3 5.3-2.8l423.9-423.9a9.96 9.96 0 000-14.1L694.9 114.9c-1.9-1.9-4.4-2.9-7.1-2.9s-5.2 1-7.1 2.9L256.8 538.8c-1.5 1.5-2.4 3.3-2.8 5.3l-29.5 168.2a33.5 33.5 0 009.4 29.8c6.6 6.4 14.9 9.9 23.8 9.9zm67.4-174.4L687.8 215l73.3 73.3-362.7 362.6-88.9 15.7 15.6-89zM880 836H144c-17.7 0-32 14.3-32 32v36c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-36c0-17.7-14.3-32-32-32z" />
+        </svg>
+    );
+}
+
+export const OutlineFileIcon = (props: React.SVGProps<SVGSVGElement>) => {
+    return (
+        <svg
+            fill="currentColor"
+            viewBox="0 0 16 16"
+            height="1em"
+            width="1em"
+            {...props}
+        >
+            <path d="M14 4.5V14a2 2 0 01-2 2H4a2 2 0 01-2-2V2a2 2 0 012-2h5.5L14 4.5zm-3 0A1.5 1.5 0 019.5 3V1H4a1 1 0 00-1 1v12a1 1 0 001 1h8a1 1 0 001-1V4.5h-2z" />
+        </svg>
+    );
+}
