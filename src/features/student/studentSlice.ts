@@ -4,6 +4,8 @@ import {StudentInterface} from "./studentInterface";
 
 export const initialStudentState: StudentInterface[] = [{
     id: '',
+    russian_name: '',
+    latin_name: '',
     agent_name: '',
     agent_phone_number: '',
     agent_first_email: '',

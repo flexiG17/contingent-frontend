@@ -28,19 +28,19 @@ const FileModalComponent = (props: InputProps) => {
     };
 
     const fetchData = () => {
-        getFiles(params)
+        return getFiles(params)
             .then((data) => {
                 setFiles(data)
             })
             .catch(() => {
 
             })
-            .finally(() => setIsLoading(false))
     }
 
     useEffect(() => {
         setIsLoading(true)
         fetchData()
+            .finally(() => setIsLoading(false))
     }, [])
 
     const uploadFileHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -77,7 +77,18 @@ const FileModalComponent = (props: InputProps) => {
                     ?
                     <SpinComponent isLoading={isLoading}/>
                     :
-                    <FileListComponent files={files}/>}
+                    <>
+                        {
+                            files.length > 0
+                                ?
+                                <FileListComponent files={files}/>
+                                :
+                                <>
+                                    Пока что у студента нет загруженных файлов
+                                </>
+                        }
+                    </>
+                }
                 {
                     // active && <ModalDirectory active={active} setActive={setActive} studentId={studentId}/>
                 }

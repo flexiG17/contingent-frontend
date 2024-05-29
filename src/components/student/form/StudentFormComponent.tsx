@@ -11,6 +11,7 @@ import {Routes} from "../../../router/routes";
 import {PathsEnum} from "../../../router/pathsEnum";
 import {Modal, notification} from "antd";
 import {dateTextFieldStyle, textFieldStyle} from "../../../shared/theme/styles";
+import {InternationalInfoEnum} from "../../../enums/internationalInfoEnum";
 const studentStructure = GetStudentCreationFormStructure()
 
 const removeEmptyFields = (data: any) => {
@@ -85,7 +86,7 @@ const StudentFormComponent = ({educationType, studentData, isDisabledField}: {ed
             {contextHolder}
             <section className={styles.grid}>
                 <div className={styles.column}>
-                    {[...studentStructure].splice(0, 5).map((section) => {
+                    {studentStructure.leftSideFields.map((section) => {
                         return <div className={styles.column_block}>
                             <h3 key={section.key}>{section.title}</h3>
                             {section.sectionFields.map((field) => {
@@ -99,11 +100,10 @@ const StudentFormComponent = ({educationType, studentData, isDisabledField}: {ed
                                     type={field.type}
                                     select={field.type === InputTypeEnum.SELECT}
                                     required={field.required}
-                                    // @ts-ignore
                                     defaultValue={getDefaultValue(field)}
                                     size="small"
                                 >
-                                    {field.values.map((option) => (
+                                    {field.values.map((option: {value: InternationalInfoEnum, label: InternationalInfoEnum}) => (
                                         <MenuItem key={option.value} value={option.value}>
                                             {option.label}
                                         </MenuItem>
@@ -115,7 +115,7 @@ const StudentFormComponent = ({educationType, studentData, isDisabledField}: {ed
                     })}
                 </div>
                 <div className={styles.column}>
-                    {[...studentStructure].splice(5, 3).map((section) => {
+                    {studentStructure.rightSideFields.map((section) => {
                         return <div
                             key={section.key}
                             className={styles.column_block}>
@@ -132,7 +132,6 @@ const StudentFormComponent = ({educationType, studentData, isDisabledField}: {ed
                                     type={field.type}
                                     select={field.type === InputTypeEnum.SELECT}
                                     required={field.required}
-                                    // @ts-ignore
                                     defaultValue={getDefaultValue(field)}
                                     size="small">
                                     {field.values.map((option) => (

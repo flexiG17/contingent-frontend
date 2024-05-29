@@ -6,13 +6,16 @@ import {RouterProvider} from "react-router-dom";
 import {Routes} from "./router/routes";
 import {Provider} from "react-redux";
 import {store} from "./store/store";
+import { App as AntdApp } from "antd";
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
     .render(
         <React.StrictMode>
-            <Provider store={store}>
-                <RouterProvider router={Routes}/>
-            </Provider>
+            <AntdApp>
+                <Provider store={store}>
+                    <RouterProvider router={Routes}/>
+                </Provider>
+            </AntdApp>
         </React.StrictMode>
     );
 

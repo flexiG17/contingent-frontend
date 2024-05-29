@@ -1,5 +1,7 @@
 export interface StudentInterface {
     id: string;
+    latin_name: string;
+    russian_name: string;
 
     agent_name?: string;
     agent_phone_number?: string;

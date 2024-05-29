@@ -21,7 +21,7 @@ const TableComponent = ({data, setData} : InputProps) => {
         pagination: {
             current: 1,
             pageSize: 10,
-            pageSizeOptions: ['10', '25', '50', '100', data.length.toString()]
+            pageSizeOptions: ['5', '10', '25', '50', '100', data.length.toString()]
         },
     });
 

@@ -2,7 +2,7 @@ import React from "react";
 import {ConfigProvider, Spin} from "antd";
 import variables from '../theme/_variables.module.scss'
 
-const SpinComponent = ({isLoading} : {isLoading: boolean}) => {
+const SpinComponent = ({isLoading} : {isLoading?: boolean}) => {
     return <ConfigProvider
         theme={{
             token: {
