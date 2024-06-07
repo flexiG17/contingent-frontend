@@ -1,0 +1,1 @@
+export const GetEnumValueByKey = (inputEnum: any, value: string): any => Object.values(inputEnum)[Object.keys(inputEnum).indexOf(value)]
