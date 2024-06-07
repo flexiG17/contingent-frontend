@@ -2,7 +2,7 @@ import React, {Dispatch, SetStateAction, useEffect, useState} from "react";
 import {ConfigProvider, notification, Table, TableProps} from "antd";
 import {GetTableColumns} from "./getTableColumns";
 import {StudentsDataToDisplay} from "../../../../../utils/const";
-import {TableColumnsInterface} from "../../interfaces/tableColumnsInterface";
+import {TableColumnsInterface} from "../../interfaces/TableColumnsInterface";
 import {TableRowSelection} from "antd/es/table/interface";
 import {TableParams} from "../../TableComponent";
 import variables from "../../../../../shared/theme/_variables.module.scss";
@@ -10,12 +10,15 @@ import {getStudents} from "../../../../../actions/student";
 import {Snackbar} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import {PathsEnum} from "../../../../../router/pathsEnum";
+import {PageInterface} from "../../../../../interfaces/table/PageInterface";
+import {StudentInterface} from "../../../../../interfaces/student/StudentInterface";
+import SetStudentDataProps from "../../../../../pages/main/SetStudentDataInterface";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../../../../../store/store";
+import {setStudentList} from "../../../../../features/studentList/studentSlice";
 
-interface InputProps {
-    rowSelection: TableRowSelection<TableColumnsInterface>,
-
-    data: any[],
-    setData: React.Dispatch<React.SetStateAction<any[]>>,
+interface InputProps extends SetStudentDataProps {
+    rowSelection: TableRowSelection<StudentInterface>,
 
     tableParams: TableParams,
     setTableParams: Dispatch<SetStateAction<TableParams>>,
@@ -31,20 +34,24 @@ export const TableElement = ({rowSelection, tableParams, setTableParams, isLoadi
             ...sorter,
         });
     }
+    const studentListState = useSelector((state: RootState) => state.studentList)
+    const disptach = useDispatch()
 
     useEffect(() => {
-        getStudents()
+        getStudents(1, 10)
             .then((data) => {
                 setIsLoading(false)
-                // @ts-ignore
-                data.reverse().map((field) => {
-                    field.date_creation = new Date(field.date_creation).toLocaleDateString()
+                setTableParams({
+                    pagination: {
+                        pageSize: 10,
+                        total: data.meta.itemCount
+                    }
                 })
+                disptach(setStudentList(data.data))
                 setData(data)
             })
             .catch(() => setIsLoading(false))
     }, [])
-
     return (
         <ConfigProvider
             theme={{
@@ -66,10 +73,9 @@ export const TableElement = ({rowSelection, tableParams, setTableParams, isLoadi
         >
             <Table
                 rowSelection={rowSelection}
-                rowKey={(record) => record.id}
                 columns={GetTableColumns()}
-                // @ts-ignore
-                dataSource={data}
+                rowKey={(record) => record.id}
+                dataSource={studentListState}
                 pagination={tableParams.pagination}
                 onChange={handleTableChange}
                 style={{width: 'auto'}}
@@ -77,7 +83,7 @@ export const TableElement = ({rowSelection, tableParams, setTableParams, isLoadi
                 onRow={(record, rowIndex) => {
                     return {
                         onClick: event => {
-                            navigate(`${PathsEnum.STUDENT}/${record.id}`)
+                            navigate(`${PathsEnum.STUDENT_CARD}/${record.id}`)
                         },
                     };
                 }}

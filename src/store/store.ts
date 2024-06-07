@@ -3,16 +3,21 @@ import studentReducer from '../features/student/studentSlice'
 import userReducer from '../features/user/userSlice'
 import tableReducer from '../features/table/tableSlice'
 import fileReducer from '../features/file/fileSlice'
+import studentListReducer from '../features/studentList/studentSlice'
 import mailReducer from '../features/mail/mailSlice'
 
 export const store = configureStore({
     reducer: {
         student: studentReducer,
-        user: userReducer,
+        file: fileReducer,
+        studentList: studentListReducer,
+        /*user: userReducer,
         table: tableReducer,
-        mail: mailReducer,
-        file: fileReducer
+        mail: mailReducer,*/
     },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+        serializableCheck: false
+    }),
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

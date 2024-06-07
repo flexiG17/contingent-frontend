@@ -6,12 +6,11 @@ import {PathsEnum} from "../../../router/pathsEnum";
 import FilterComponent from "../../filter/FilterComponent";
 import InputComponent from "../../../shared/input/InputComponent";
 import {InputTypeEnum} from "../../../shared/input/InputTypeEnum";
+import {PageInterface} from "../../../interfaces/table/PageInterface";
+import {StudentInterface} from "../../../interfaces/student/StudentInterface";
+import SetStudentDataProps from "../../../pages/main/SetStudentDataInterface";
 
-interface InputProps {
-    data: any[],
-    setData: React.Dispatch<React.SetStateAction<any[]>>,
-}
-const ActionComponent = ({data, setData} : InputProps) => {
+const ActionComponent = ({data, setData} : SetStudentDataProps) => {
     return <div className={styles.block}>
         <ButtonComponent
             text={'Добавить студента'}

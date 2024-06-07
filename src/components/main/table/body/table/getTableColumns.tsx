@@ -3,15 +3,20 @@ import {SearchOutlined} from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
 import React, {useState} from "react";
 import {FilterDropdownProps} from "antd/es/table/interface";
-import {TableColumnsInterface} from "../../interfaces/tableColumnsInterface";
+import {TableColumnsInterface} from "../../interfaces/TableColumnsInterface";
+import {StudentInterface} from "../../../../../interfaces/student/StudentInterface";
+import {GenderEnum} from "../../../../../enums/passportEnum";
+import {GetEnumValueByKey} from "../../../../../utils/GetEnumValueByKey";
+import {PaymentStatusEnum} from "../../../../../enums/paymentEnum";
+import {EnrollmentStatusEnum} from "../../../../../enums/enrollmentEnum";
 
-export type DataIndex = keyof TableColumnsInterface;
+export type DataIndex = keyof StudentInterface;
 
-export const GetTableColumns = (): TableColumnsType<TableColumnsInterface> => {
+export const GetTableColumns = (): TableColumnsType<StudentInterface> => {
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
 
-    const handleSearch = (
+    /*const handleSearch = (
         selectedKeys: string[],
         confirm: FilterDropdownProps['confirm'],
         dataIndex: DataIndex,
@@ -24,14 +29,14 @@ export const GetTableColumns = (): TableColumnsType<TableColumnsInterface> => {
     const handleReset = (clearFilters: () => void) => {
         clearFilters();
         setSearchText('');
-    };
+    };*/
 
-    //const searchInput = useRef<InputRef>(null);
+    /*const searchInput = useRef<InputRef>(null);
     const getColumnSearchProps = (dataIndex: DataIndex): TableColumnType<TableColumnsInterface> => ({
         filterDropdown: ({setSelectedKeys, selectedKeys, confirm, clearFilters, close}) => (
             <div style={{padding: 8}} onKeyDown={(e) => e.stopPropagation()}>
                 <Input
-                    /*ref={searchInput}*/
+                    /!*ref={searchInput}*!/
                     placeholder={`Search ${dataIndex}`}
                     value={selectedKeys[0]}
                     onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
@@ -82,15 +87,15 @@ export const GetTableColumns = (): TableColumnsType<TableColumnsInterface> => {
             <SearchOutlined style={{color: filtered ? '#1677ff' : undefined}}/>
         ),
         onFilter: (value, record) =>
-            record[dataIndex]
+            record[dataIndex]!
                 .toString()
                 .toLowerCase()
                 .includes((value as string).toLowerCase()),
-        /*onFilterDropdownOpenChange: (visible) => {
+        /!*onFilterDropdownOpenChange: (visible) => {
             if (visible) {
                 setTimeout(() => searchInput.current?.select(), 100);
             }
-        },*/
+        },*!/
         render: (text) =>
             searchedColumn === dataIndex ? (
                 <Highlighter
@@ -102,88 +107,103 @@ export const GetTableColumns = (): TableColumnsType<TableColumnsInterface> => {
             ) : (
                 text
             ),
-    });
+    });*/
 
     return [
         {
             title: 'Дата создания',
-            dataIndex: 'date_creation',
-            key: 'date_creation',
-            ...getColumnSearchProps('date_creation'),
+            dataIndex: ['metadata', 'created_at'],
+            key: 'created_at',
+            render: item => {
+                return new Date(item).toLocaleDateString()
+            },
+            // ...getColumnSearchProps('created_at'),
         },
         {
             title: 'Тип обучения',
-            dataIndex: 'education_type',
-            key: 'education_type',
+            dataIndex: ['current_education', 'type'],
+            key: 'type',
+            render: item => {
+                return item === 'Contract' ? 'Контракт' : 'Квота'
+            },
             /*...getColumnSearchProps('education_type'),*/
-            filters: [
-                {
-                    text: 'Квота',
-                    value: 'Квота',
-                },
-                {
-                    text: 'Контракт',
-                    value: 'Контракт',
-                },
-            ],
-            onFilter: (value, record) => record.education_type.indexOf(value as string) === 0,
+            // filters: [
+            //     {
+            //         text: 'Квота',
+            //         value: 'Quota',
+            //     },
+            //     {
+            //         text: 'Контракт',
+            //         value: 'Contract',
+            //     },
+            // ],
+            // onFilter: (value, record) => record.current_education.form_study.indexOf(value as string) === 0,
         },
-        {
-            title: 'Кол-во часов',
-            // dataIndex: 'educational_program',
-            dataIndex: 'hours_number',
-            key: 'educational_program',
-            ...getColumnSearchProps('educational_program'),
-            sorter: (a, b) => a.educational_program.length - b.educational_program.length,
-            sortDirections: ['descend', 'ascend'],
-        },
+        // ИЗМЕНИТЬ: если количество часов не указано, то крашится
+        // {
+        //     title: 'Кол-во часов',
+        //     dataIndex: ['current_education', 'educational_programs', 'hours_number'],
+        //     key: 'hours_number',
+        //     render: item => {
+        //         return item ? item : ''
+        //     },
+        //     // ...getColumnSearchProps('educational_program'),
+        //     // sorter: (a, b) => a.educational_program.length - b.educational_program.length,
+        //     // sortDirections: ['descend', 'ascend'],
+        // },
         {
             title: 'ФИО (лат.)',
-            dataIndex: 'latin_name',
+            dataIndex: ['latin_name'],
             key: 'latin_name',
             width: '13%',
-            ...getColumnSearchProps('latin_name'),
+            // ...getColumnSearchProps('latin_name'),
         },
         {
             title: 'ФИО (кир.)',
-            dataIndex: 'russian_name',
+            dataIndex: ['russian_name'],
             key: 'russian_name',
             width: '13%',
-            ...getColumnSearchProps('russian_name'),
+            // ...getColumnSearchProps('russian_name'),
         },
         {
             title: 'Страна',
-            dataIndex: 'country',
+            dataIndex: ['passport', 'country'],
             key: 'country',
-            ...getColumnSearchProps('country'),
+            // ...getColumnSearchProps('country'),
         },
         {
             title: 'Пол',
-            dataIndex: 'gender',
+            dataIndex: ['passport', 'gender'],
             key: 'gender',
-            filters: [
+            render: (item) => {
+                return GetEnumValueByKey(GenderEnum, item)
+            }
+            /*filters: [
                 {
                     text: 'Мужской',
-                    value: 'Мужской',
+                    value: 'Male',
                 },
                 {
                     text: 'Женский',
-                    value: 'Женский',
+                    value: 'Female',
                 },
-            ],
-            onFilter: (value, record) => record.gender.indexOf(value as string) === 0,
+            ],*/
+            // onFilter: (value, record) => record.passport.gender.indexOf(value as string) === 0,
         },
         {
             title: '№ договора',
-            dataIndex: 'contract_number',
+            dataIndex: ['enrollment', 'contract_number'],
             key: 'contract_number',
-            ...getColumnSearchProps('contract_number'),
+            // ...getColumnSearchProps('contract_number'),
         },
         {
             title: 'Статус оплаты',
-            dataIndex: 'payment_status',
+            dataIndex: ['payment', 'payment_status'],
             key: 'payment_status',
-            filters: [
+            render: (item) => {
+                return GetEnumValueByKey(PaymentStatusEnum, item)
+            }
+            /*filters: [
                 {
                     text: 'Оплачено',
                     value: 'Оплачено',
@@ -196,20 +216,23 @@ export const GetTableColumns = (): TableColumnsType<TableColumnsInterface> => {
                     text: 'Оплачено частично',
                     value: 'Оплачено частично',
                 },
-            ],
-            onFilter: (value, record) => record.payment_status.indexOf(value as string) === 0,
+            ],*/
+            // onFilter: (value, record) => record.payment.payment_status.indexOf(value as string) === 0,
         },
         {
             title: '№ о зачислении',
-            dataIndex: 'enrollment_order',
-            key: 'enrollment_order',
-            ...getColumnSearchProps('enrollment_order'),
+            dataIndex: ['enrollment', 'order_number'],
+            key: 'order_number',
+            // ...getColumnSearchProps('status'),
         },
         {
             title: 'Зачисление',
-            dataIndex: 'enrollment',
+            dataIndex: ['enrollment', 'status'],
             key: 'enrollment',
-            filters: [
+            render: (item) => {
+                return GetEnumValueByKey(EnrollmentStatusEnum, item)
+            },
+            /*filters: [
                 {
                     text: 'Зачислен',
                     value: 'Зачислен',
@@ -222,8 +245,8 @@ export const GetTableColumns = (): TableColumnsType<TableColumnsInterface> => {
                     text: 'Отчислен',
                     value: 'Отчислен',
                 },
-            ],
-            onFilter: (value, record) => record.enrollment.indexOf(value as string) === 0,
+            ],*/
+            onFilter: (value, record) => record.enrollment?.status?.indexOf(value as string) === 0,
         },
     ];
 }

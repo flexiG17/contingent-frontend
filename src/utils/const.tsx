@@ -1,56 +1,60 @@
-import {TableColumnsInterface} from "../components/main/table/interfaces/tableColumnsInterface";
+import {StudentInterface} from "../interfaces/student/StudentInterface";
+import {EnrollmentStatusEnum} from "../enums/enrollmentEnum";
+import {CurrentEducationTypeEnum} from "../enums/currentEducationTypeEnum";
 
-export const StudentsDataToDisplay: TableColumnsInterface[] = [
+export const StudentsDataToDisplay: StudentInterface[] = [
     {
         id: '1',
-        date_creation: new Date().toLocaleDateString(),
-        education_type: "Квота",
-        educational_program: '1008 (1 год)',
+        metadata: { created_at: new Date()},
+        current_education: { type: CurrentEducationTypeEnum.Quota},
+        // educational_program: '1008 (1 год)',
         latin_name: 'John Brown John Brown',
         russian_name: 'Джон Браун Джон Браун',
-        country: 'Египет',
-        gender: 'Мужской',
-        contract_number: 'какой-то там номер',
-        payment_status: 'Оплачено',
-        enrollment_order: '124123',
-        enrollment: "Зачислен"
+        passport: {country: 'Египет', gender: 'Мужской'},
+        payment: {
+            payment_status: 'Оплачено',
+        },
+        enrollment: {
+            order_number: '123123',
+            contract_number: 'какой-то там номер',
+            status: EnrollmentStatusEnum.Expelled
+        }
     },
     {
         id: '2',
-        date_creation: new Date().toLocaleDateString(),
-        education_type: "Контракт",
-        educational_program: '256 (24-25 г.)',
-        latin_name: 'Andrey Bushuev',
-        russian_name: 'Андрей Бушуев',
-        country: 'Россия',
-        gender: 'Мужской',
-        contract_number: 'какой-то там номер',
-        payment_status: 'Оплачено частично',
-        enrollment_order: '124123',
-        enrollment: "Не зачислен"
+        metadata: { created_at: new Date()},
+        current_education: { type: CurrentEducationTypeEnum.Contract},
+        // educational_program: '1008 (1 год)',
+        latin_name: 'Brown John Brown John',
+        russian_name: 'Браун Джон Браун Джон',
+        passport: {country: 'Россия', gender: 'Женский'},
+        payment: {
+            payment_status: 'Оплачено частично',
+        },
+        enrollment: {
+            order_number: '84123',
+            contract_number: 'Блатной',
+            status: EnrollmentStatusEnum.Expelled
+        }
     },
     {
         id: '3',
-        date_creation: new Date().toLocaleDateString(),
-        education_type: "Контракт",
-        educational_program: '256 (24-25 г.)',
-        latin_name: 'Vlad Kohin',
-        russian_name: 'Влад Кохин',
-        country: 'Россия',
-        gender: 'Мужской',
-        contract_number: '3333',
-        payment_status: 'Не оплачено',
-        enrollment_order: '124123',
-        enrollment: "Не зачислен"
+        metadata: { created_at: new Date()},
+        current_education: { type: CurrentEducationTypeEnum.Quota},
+        // educational_program: '1008 (1 год)',
+        latin_name: 'John Brown John Brown',
+        russian_name: 'Джон Браун Джон Браун',
+        passport: {country: 'Египет', gender: 'Мужской'},
+        payment: {
+            payment_status: 'Оплачено',
+        },
+        enrollment: {
+            order_number: '123123',
+            contract_number: 'какой-то там номер',
+            status: EnrollmentStatusEnum.Expelled
+        }
     },
 ];
-
-export const fileSizes = {
-    0: 'byte',
-    1: 'KB',
-    2: 'MB',
-    3: 'GB'
-}
 
 export const fieldPriorities = [
     {
@@ -243,7 +247,7 @@ export const Answers = {
             }
         ]
     },
-    education_type: {
+    type: {
         label: 'Тип обучения',
         type: 'string',
         answers: [
@@ -257,7 +261,7 @@ export const Answers = {
             }
         ]
     },
-    enrollment: {
+    status: {
         label: 'Статус зачисления',
         type: 'string',
         answers: [

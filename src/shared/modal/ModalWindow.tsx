@@ -5,17 +5,18 @@ import {Modal} from "antd";
 interface InputProps {
     children: ReactNode,
     open: boolean,
-    setOpen: React.Dispatch<React.SetStateAction<boolean>>
+    setOpen: React.Dispatch<React.SetStateAction<boolean>>,
+    width?: string | number
 }
 
-const ModalWindow = ({children, open, setOpen}: InputProps) => {
+const ModalWindow = ({children, open, setOpen, width= 900}: InputProps) => {
     return (
         <Modal
             centered
             open={open}
             onOk={() => setOpen(false)}
             onCancel={() => setOpen(false)}
-            width={900}
+            width={width}
             footer={<></>}
         >
             {children}

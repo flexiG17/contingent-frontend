@@ -3,5 +3,5 @@ export enum PathsEnum {
     LOGIN = '/login',
     MAIN = '/',
     CREATE_STUDENT = '/create',
-    STUDENT= `/student`
+    STUDENT_CARD= `/student`
 }

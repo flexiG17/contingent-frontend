@@ -60,14 +60,14 @@ const FilterField = ({item, columns, setFilterArr, changeFilterProp}: any) => {
                 </select>
 
                 <div className={styles.third_parameter}>
-                    {/*// @ts-ignore*/}
+                    {/*@ts-ignore*/}
                     {(!Answers[item.param.value] && item.operator !== 'range') &&
                         <input className={styles.search_filter} type='text'
                                onChange={(e) => {
                                    changeFilterProp(item.id, e.target.value, 'value');
                                }}
                                value={item.value}/>}
-                    {/*// @ts-ignore*/}
+                    {/*@ts-ignore*/}
                     {Answers[item.param.value] &&
                         <select className={styles.search_filter} value={item.value}
                                 style={{width: '205px'}}

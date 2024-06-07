@@ -1,13 +1,12 @@
 import React, {useEffect, useState} from "react";
 import FilterBody from "./filterBody/FilterBody";
+import {StudentInterface} from "../../interfaces/student/StudentInterface";
+import {PageInterface} from "../../interfaces/table/PageInterface";
+import SetStudentDataProps from "../../pages/main/SetStudentDataInterface";
 
-interface InputProps {
-    data: any[],
-    setData: React.Dispatch<React.SetStateAction<any[]>>,
-}
-const FilterComponent = ({data, setData} : InputProps) => {
+const FilterComponent = ({data, setData} : SetStudentDataProps) => {
     const [filters, setFilters] = useState([]);
-    const multiFilter = (item: any) => {
+    /*const multiFilter = (item: any) => {
         for (let i = 0; i < filters.length; i++) {
             let filter: any = filters[i];
             if (item[filter.param.value] === undefined) return false;
@@ -91,7 +90,7 @@ const FilterComponent = ({data, setData} : InputProps) => {
         setData(data.filter(row => {
             return multiFilter(row);
         }))
-    }, [filters])
+    }, [filters])*/
 
     return (
         <FilterBody filters={filters} setFilters={setFilters}/>

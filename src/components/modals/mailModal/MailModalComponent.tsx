@@ -16,7 +16,7 @@ import {LetterTemplates} from "../../../utils/const";
 import {Link} from "react-router-dom";
 import {IconFile, IconMail, OutlineFileIcon} from "../../../assets/Icons";
 import {Modal, notification} from "antd";
-import {sendMessage} from "../../../actions/student";
+import {StudentInterface} from "../../../interfaces/student/StudentInterface";
 
 
 const selectedMailsList: any[] = []
@@ -24,7 +24,7 @@ const MailModalComponent = ({open, setOpen, studentsList, selectedRowKeys}:
                                 {
                                     open: boolean,
                                     setOpen: React.Dispatch<React.SetStateAction<boolean>>,
-                                    studentsList: any[],
+                                    studentsList: StudentInterface[],
                                     selectedRowKeys: React.Key[]
                                 }) => {
     let options: any[] = []
@@ -50,14 +50,14 @@ const MailModalComponent = ({open, setOpen, studentsList, selectedRowKeys}:
         setTemplate(e.value);
         setText(e.value)
     }
-    const mailtoHref = `mailto:${studentsList.map(student => student.email)}?subject=${subject}&body`
+    /*const mailtoHref = `mailto:${studentsList.map(student => student.email)}?subject=${subject}&body`
 
     studentsList.map((user) => {
         selectedRowKeys.map((id) => {
             if (user.id === id)
                 selectedMailsList.push(user.first_student_email)
         })
-    })
+    })*/
 
     const handleSendMail = () => {
         const dataToSave = new FormData()
@@ -77,14 +77,14 @@ const MailModalComponent = ({open, setOpen, studentsList, selectedRowKeys}:
             Object.values(filesToSend).map(file => {
                 dataToSave.append('files', file)
             })
-        sendMessage(dataToSave)
+        /*sendMessage(dataToSave)
             .then(() => {
                 setLoadingRequest(false)
                 openNotificationWithIcon()
                 setTimeout(() => {
                     window.location.reload()
                 }, 1500)
-            })
+            })*/
     }
 
     return (
@@ -164,7 +164,8 @@ const MailModalComponent = ({open, setOpen, studentsList, selectedRowKeys}:
                                    size="small" sx={{width: "300px", marginTop: "25px"}}
                         />
                     </div>
-                    <a className='send_with_other_mail' href={mailtoHref}>Отправить с другой почты</a>
+                    {/*<a className='send_with_other_mail' href={mailtoHref}>Отправить с другой почты</a>*/}
+                    <a className='send_with_other_mail' >Отправить с другой почты</a>
                     <TextField
                         className={styles.input_message_sms}
                         label="Текст письма"

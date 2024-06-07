@@ -1,0 +1,22 @@
+@import '../../../../shared/theme/variables.module';
+
+.column {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 30px;
+
+  &_block {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    h3 {
+      color: $primary-color;
+      font-size: 16px;
+      font-weight: 500;
+
+      margin-bottom: 10px;
+    }
+  }
+}

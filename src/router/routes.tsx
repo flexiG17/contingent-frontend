@@ -3,7 +3,8 @@ import StartPage from "../pages/start/StartPage";
 import {PathsEnum} from "./pathsEnum";
 import LoginPage from "../pages/login/LoginPage";
 import MainPage from "../pages/main/MainPage";
-import StudentPage from "../pages/student/StudentPage";
+import StudentCardPage from "../pages/student/card/StudentCardPage";
+import CreateStudentPage from "../pages/student/create/CreateStudentPage";
 
 export const Routes = createBrowserRouter([
     {
@@ -20,10 +21,10 @@ export const Routes = createBrowserRouter([
     },
     {
         path: PathsEnum.CREATE_STUDENT,
-        element: <StudentPage/>
+        element: <CreateStudentPage/>
     },
     {
-        path: `${PathsEnum.STUDENT}/:id`,
-        element: <StudentPage/>
+        path: `${PathsEnum.STUDENT_CARD}/:id`,
+        element: <StudentCardPage/>
     },
 ])

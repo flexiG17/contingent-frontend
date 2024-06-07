@@ -2,17 +2,18 @@ import {createSlice} from "@reduxjs/toolkit";
 
 const fileSlice = createSlice({
     name: 'file',
-    initialState: {
-        email: '',
-        password: ''
-    },
+    initialState: new FormData(),
     reducers: {
-        login: (state, action) => {
-            state.email = action.payload.email
-            state.password = action.payload.password
+        append: (state, action) => {
+            state.append(action.payload.key, action.payload.value)
+            return state
+        },
+        clean: (state) => {
+            state = new FormData()
+            return state
         },
     },
 })
 
-export const { login } = fileSlice.actions
+export const { append, clean } = fileSlice.actions
 export default fileSlice.reducer

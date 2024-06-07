@@ -1,10 +1,22 @@
 import React, {useEffect, useState} from "react";
 import {fieldPriorities} from "../../../utils/const";
-import {getColumns} from "../../../actions/student";
 import {Badge, IconButton, Menu} from "@mui/material";
 import FilterField from "../filterField/FilterField";
-import {IconDelete} from "../../../assets/Icons";
+import {IconDelete, IconPlus} from "../../../assets/Icons";
 import styles from './filterBody.module.scss'
+import {getFilterStruct, getStudents} from "../../../actions/student";
+import {GetEnumLatinKeyByValue} from "../../../utils/GetEnumLatinKeyByValue";
+import {GenderEnum} from "../../../enums/passportEnum";
+import {CurrentEducationTypeEnum} from "../../../enums/currentEducationTypeEnum";
+import {
+    EnrollmentScholarshipStatusEnum,
+    EnrollmentStatusEnum,
+    InternationalInfoEnum
+} from "../../../enums/enrollmentEnum";
+import {PaymentStatusEnum} from "../../../enums/paymentEnum";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../../../store/store";
+import {setStudentList} from "../../../features/studentList/studentSlice";
 
 const ITEM_HEIGHT = 50;
 const SortColumns = (columns: any[]) => {
@@ -33,8 +45,42 @@ const FilterBody = ({filters, setFilters}: any) => {
     const handleClick = (event: any) => {
         setAnchorEl(event.currentTarget);
     };
+    const studentListState = useSelector((state: RootState) => state.studentList)
+    const disptach = useDispatch()
 
     const handleClose = () => {
+        let object: Record<string, string | Date> = {};
+        filterArr.map((filter: any) => {
+            let newValue = filter.value
+            switch (filter.param.value){
+                case 'gender':
+                    newValue = GetEnumLatinKeyByValue(GenderEnum, filter.value)
+                    break
+                case 'type':
+                    newValue = GetEnumLatinKeyByValue(CurrentEducationTypeEnum, filter.value)
+                    break
+                case 'RF_location':
+                    newValue = GetEnumLatinKeyByValue(EnrollmentScholarshipStatusEnum, filter.value)
+                    break
+                case 'status':
+                    newValue = GetEnumLatinKeyByValue(EnrollmentStatusEnum, filter.value)
+                    break
+                case 'payment_status':
+                    newValue = GetEnumLatinKeyByValue(PaymentStatusEnum, filter.value)
+                    break
+            }
+            object = {
+                ...object,
+                [filter.param.section]: {
+                    field: filter.param.value,
+                    value: newValue
+                }
+            }
+        })
+        getStudents(1, 10, object)
+            .then((response) => {
+                disptach(setStudentList(response.data))
+            })
         // @ts-ignore
         setAnchorEl(null);
     };
@@ -51,10 +97,11 @@ const FilterBody = ({filters, setFilters}: any) => {
     };
 
     useEffect(() => {
-        getColumns()
+        getFilterStruct()
             .then(res =>
                 setColumns(res.data.map((item: any) => {
                     return {
+                        section: item.section,
                         value: item.name,
                         label: item.ru,
                         type: item.type
@@ -66,7 +113,8 @@ const FilterBody = ({filters, setFilters}: any) => {
         <div>
             <button
                 style={{borderTopRightRadius: 0, borderBottomRightRadius: 0}}
-                onClick={handleClick}>
+                onClick={handleClick}
+            >
                 <p>
                     Фильтрация
                 </p>
@@ -104,7 +152,7 @@ const FilterBody = ({filters, setFilters}: any) => {
                         }]);
                     }}>
                         Добавить
-                        {/*<AddIcon/>*/}
+                        <IconPlus width={28} height={28}/>
                     </button>
                     {
                         (filters.length !== 0 || filterArr.length !== 0) &&

@@ -1,6 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 
-const tableSlice = createSlice({
+const tableSlice
+    = createSlice({
     name: 'table',
     initialState: {
         tableParams: {

@@ -1,0 +1,74 @@
+@import "../../../../../shared/theme/variables.module";
+
+.file {
+  width: 100%;
+  border-bottom: 1px solid $primary-color;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.file:last-child {
+  border-bottom: none;
+}
+
+.icon_file {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.icon_with_name_position{
+  padding-top: 10px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  padding-bottom: 10px;
+}
+
+.file_size {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &_text {
+    font-size: 16px;
+    font-weight: 400;
+    min-width: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.text {
+  font-size: 16px;
+  font-weight: 400;
+
+  max-width: 250px;
+  min-width: 70px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 500px) {
+  .text {
+    max-width: 130px;
+  }
+}
+
+.file_icon {
+  width: 20px;
+  height: 20px;
+  transition: 0.2s ease-in-out;
+}
+
+.file_icon:hover {
+  transform: scale(1.2);
+}
+
+.file_icon:hover {
+  fill: $background-color
+}

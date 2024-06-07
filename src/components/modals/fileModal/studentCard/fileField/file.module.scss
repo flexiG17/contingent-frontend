@@ -1,0 +1,133 @@
+@import "../../../../../shared/theme/variables.module";
+
+.file {
+  width: 100%;
+  border-bottom: 1px solid $primary-color;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.file:last-child {
+  border-bottom: none;
+}
+
+.icon_with_name_position{
+  padding-top: 10px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  padding-bottom: 10px;
+}
+
+.file_size {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &_text {
+    font-size: 16px;
+    font-weight: 400;
+    min-width: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.text {
+  font-size: 16px;
+  font-weight: 400;
+
+  max-width: 250px;
+  min-width: 70px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 500px) {
+  .text {
+    max-width: 180px;
+  }
+}
+
+@media (max-width: 420px) {
+  .text {
+    max-width: 130px;
+  }
+}
+
+.metadata {
+  min-width: 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  &_row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &_size {
+      display: none;
+    }
+
+    &_title {
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    &_text {
+      font-size: 14px;
+      font-weight: 400;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .file_size {
+    display: none;
+  }
+
+  .metadata {
+    &_row {
+      &_size {
+        display: flex;
+      }
+    }
+  }
+}
+
+.file_date {
+  text-align: center;
+}
+
+.file_icon {
+  width: 20px;
+  height: 20px;
+}
+
+.actions_position {
+  display: flex;
+  gap: 20px
+}
+
+.file_action_icon {
+  width: 25px;
+  height: 25px;
+  display: flex;
+  fill: $primary-color;
+  margin-top: auto;
+  margin-bottom: auto;
+
+  &_download {
+    transition: 0.2s ease-in-out;
+  }
+
+  &_download:hover {
+    cursor: pointer;
+    transform: scale(1.2);
+    fill: $primary-color-hover
+  }
+}

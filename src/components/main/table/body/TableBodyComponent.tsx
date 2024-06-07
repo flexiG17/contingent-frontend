@@ -3,15 +3,15 @@ import {TableParams} from "../TableComponent";
 import {TableElement} from "./table/TableElement";
 import styles from './tableBodyComponent.module.scss'
 import {StudentsDataToDisplay} from "../../../../utils/const";
-import MobileTable from "./mobile/MobileTable";
+import MobileTableComponent from "./mobile/MobileTableComponent";
 import TableHeaderComponent from "../header/TableHeaderComponent";
+import {PageInterface} from "../../../../interfaces/table/PageInterface";
+import {StudentInterface} from "../../../../interfaces/student/StudentInterface";
+import SetStudentDataProps from "../../../../pages/main/SetStudentDataInterface";
 
-interface InputProps {
+interface InputProps extends SetStudentDataProps{
     tableParams: TableParams,
     setTableParams: Dispatch<SetStateAction<TableParams>>,
-
-    data: any[],
-    setData: React.Dispatch<React.SetStateAction<any[]>>,
 }
 
 const TableBodyComponent = ({tableParams, setTableParams, data, setData}: InputProps) => {
@@ -21,21 +21,15 @@ const TableBodyComponent = ({tableParams, setTableParams, data, setData}: InputP
     const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
         setSelectedRowKeys(newSelectedRowKeys);
     };
-
     const rowSelection = {
         selectedRowKeys,
         onChange: onSelectChange,
     };
 
     return <>
-        <div className={styles.mobile_table}>
-            {/*<TableHeaderComponent selectedRowKeys={rowSelection.selectedRowKeys!}/>*/}
-            {StudentsDataToDisplay.map((student) => {
-                return <MobileTable student={student}/>
-            })}
-        </div>
+        <MobileTableComponent data={data}/>
         <div className={styles.desktop_table}>
-            <TableHeaderComponent usersList={data} isLoading={isLoading} selectedRowKeys={selectedRowKeys} setIsLoading={setIsLoading}/>
+            <TableHeaderComponent usersList={data.data} isLoading={isLoading} selectedRowKeys={selectedRowKeys} setIsLoading={setIsLoading}/>
             <TableElement
                 data={data}
                 setData={setData}

@@ -3,6 +3,9 @@ import styles from './tableComponent.module.scss'
 import TableBodyComponent from "./body/TableBodyComponent";
 import {GetProp, TableProps} from "antd";
 import {StudentsDataToDisplay} from "../../../utils/const";
+import {PageInterface} from "../../../interfaces/table/PageInterface";
+import {StudentInterface} from "../../../interfaces/student/StudentInterface";
+import SetStudentDataProps from "../../../pages/main/SetStudentDataInterface";
 
 type TablePaginationConfig = Exclude<GetProp<TableProps, 'pagination'>, boolean>;
 export interface TableParams {
@@ -12,25 +15,21 @@ export interface TableParams {
     filters?: Parameters<GetProp<TableProps, 'onChange'>>[1];
 }
 
-interface InputProps {
-    data: any[],
-    setData: React.Dispatch<React.SetStateAction<any[]>>,
-}
-const TableComponent = ({data, setData} : InputProps) => {
+const TableComponent = ({data, setData} : SetStudentDataProps) => {
     const [tableParams, setTableParams] = useState<TableParams>({
         pagination: {
             current: 1,
             pageSize: 10,
-            pageSizeOptions: ['5', '10', '25', '50', '100', data.length.toString()]
+            // pageSizeOptions: ['5', '10', '25', '50', '100', data.length.toString()]
+            pageSizeOptions: ['5', '10', '25', '50', '100']
         },
     });
-
     const fetchData = () => {
         setTableParams({
             ...tableParams,
             pagination: {
-                ...tableParams.pagination,
-                total: data.length,
+                pageSize: data.meta.take,
+                total: data.meta.pageCount,
                 // 200 is mock data, you should read it from server
                 // total: data.totalCount,
             },
