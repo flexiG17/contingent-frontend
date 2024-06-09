@@ -8,9 +8,9 @@ import {StudentInterface} from "../../../../../interfaces/student/StudentInterfa
 import {PageInterface} from "../../../../../interfaces/table/PageInterface";
 import MobileRowComponent from "./MobileRow/MobileRowComponent";
 
-const MobileTableComponent = ({data}: { data: PageInterface<StudentInterface> }) => {
+const MobileTableComponent = ({data}: { data: StudentInterface[] }) => {
     return <div className={styles.mobile_table}>
-        {data.data.map((student) => {
+        {data.map((student) => {
             return <MobileRowComponent key={student.id} student={student}/>
         })}
     </div>

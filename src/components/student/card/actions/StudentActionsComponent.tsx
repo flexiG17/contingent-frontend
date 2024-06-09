@@ -10,9 +10,10 @@ import SpinComponent from "../../../../shared/spin/SpinComponent";
 import SubmitModalComponent from "../../../../shared/submitModal/SubmitModalComponent";
 import {GetNotificationArgs} from "../../../../utils/notificationArgs";
 import {StudentInterface} from "../../../../interfaces/student/StudentInterface";
+import {useSelector} from "react-redux";
+import {RootState} from "../../../../store/store";
 
 interface InputProps {
-    studentData: StudentInterface,
     setIsDisabledFields: Dispatch<SetStateAction<boolean>>,
     isEditMode: boolean
 }
@@ -27,9 +28,9 @@ const StudentActionsComponent = (props: InputProps) => {
     const navigate = useNavigate()
     const handleDeleteStudent = () => {
         setIsDeleteModalOpen(false)
-
     }
 
+    const studentState = useSelector((state: RootState) => state.student)
     const actions =
         [
             {
@@ -70,7 +71,7 @@ const StudentActionsComponent = (props: InputProps) => {
         <>
             {fileOpen &&
                 <Suspense fallback={<SpinComponent isLoading={true}/>}>
-                    <CardFileModalComponent open={fileOpen} setOpen={setFileOpen} student_id={props.studentData.id}/>
+                    <CardFileModalComponent open={fileOpen} setOpen={setFileOpen} student_id={studentState.id}/>
                 </Suspense>
             }
             {isDeleteModalOpen &&
@@ -79,7 +80,7 @@ const StudentActionsComponent = (props: InputProps) => {
                     title={'Удаление студента'}
                     action={handleDeleteStudent}
                     text={
-                        <span>Вы уверены, что хотите удалить <strong>{props.studentData.russian_name}</strong>?</span>
+                        <span>Вы уверены, что хотите удалить <strong>{studentState.russian_name}</strong>?</span>
                 }/>
             }
             {/*{contextHolder}*/}

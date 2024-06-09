@@ -6,16 +6,16 @@ import StudentActionsComponent from "../card/actions/StudentActionsComponent";
 import {StudentInterface} from "../../../interfaces/student/StudentInterface";
 import {useSelector} from "react-redux";
 import {RootState} from "../../../store/store";
-import {CurrentEducationTypeEnum} from "../../../enums/currentEducationTypeEnum";
+import {CurrentEducationTypeEnum} from "../../../enums/currentEducation/currentEducationTypeEnum";
 
 interface InputProps {
-    studentData: StudentInterface,
     isLoading: boolean,
     setIsLoading: Dispatch<SetStateAction<boolean>>,
 }
 
-const StudentCardComponent = ({studentData, isLoading, setIsLoading}: InputProps) => {
+const StudentCardComponent = ({isLoading, setIsLoading}: InputProps) => {
     const [isDisabledField, setIsDisabledFields] = useState(true)
+    const studentState = useSelector((state: RootState) => state.student)
 
     return (
         <>
@@ -26,18 +26,16 @@ const StudentCardComponent = ({studentData, isLoading, setIsLoading}: InputProps
                 <div className={styles.grid}>
                     <div className={styles.inline}>
                         <h1 className={styles.title}>
-                            {studentData.latin_name}
+                            {studentState.latin_name}
                         </h1>
                     </div>
 
                     <StudentActionsComponent
-                        studentData={studentData}
                         setIsDisabledFields={setIsDisabledFields}
                         isEditMode={isDisabledField}
                     />
 
-                    <StudentCardFormComponent isDisabledField={isDisabledField}
-                                              studentData={studentData}/>
+                    <StudentCardFormComponent isDisabledField={isDisabledField}/>
                 </div>}
         </>
     )

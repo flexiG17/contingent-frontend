@@ -9,11 +9,12 @@ interface InputProps extends ArgsProps {
 export const GetNotificationArgs = (props: InputProps): ArgsProps => {
     // const icon = props.type === 'success' ? <>галочка</> : <>крестик</>
     const style: React.CSSProperties = {
-        background: props.type === 'success' ? variables.backgroundColor : variables.primaryColor
+        background: props.type === 'success' ? variables.backgroundColor : variables.backgroundColorHover
     }
 
     return {
         ...props,
+        placement: 'top',
         message: props.message,
         duration: 2,
         // icon,

@@ -1,5 +1,5 @@
 import {InputTypeEnum} from "../../../shared/input/InputTypeEnum";
-import {CurrentEducationTypeEnum} from "../../../enums/currentEducationTypeEnum";
+import {CurrentEducationTypeEnum} from "../../../enums/currentEducation/currentEducationTypeEnum";
 
 export interface FieldValueList {
     label: string,

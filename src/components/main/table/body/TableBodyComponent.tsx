@@ -8,16 +8,19 @@ import TableHeaderComponent from "../header/TableHeaderComponent";
 import {PageInterface} from "../../../../interfaces/table/PageInterface";
 import {StudentInterface} from "../../../../interfaces/student/StudentInterface";
 import SetStudentDataProps from "../../../../pages/main/SetStudentDataInterface";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../../../../store/store";
 
-interface InputProps extends SetStudentDataProps{
+interface InputProps{
     tableParams: TableParams,
     setTableParams: Dispatch<SetStateAction<TableParams>>,
+    isLoading: boolean,
+    setIsLoading: React.Dispatch<SetStateAction<boolean>>,
 }
 
-const TableBodyComponent = ({tableParams, setTableParams, data, setData}: InputProps) => {
+const TableBodyComponent = ({tableParams, setTableParams, isLoading, setIsLoading}: InputProps) => {
 
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-    const [isLoading, setIsLoading] = useState(true)
     const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
         setSelectedRowKeys(newSelectedRowKeys);
     };
@@ -25,19 +28,17 @@ const TableBodyComponent = ({tableParams, setTableParams, data, setData}: InputP
         selectedRowKeys,
         onChange: onSelectChange,
     };
+    const studentListState = useSelector((state: RootState) => state.studentList)
 
     return <>
-        <MobileTableComponent data={data}/>
+        <MobileTableComponent data={studentListState}/>
         <div className={styles.desktop_table}>
-            <TableHeaderComponent usersList={data.data} isLoading={isLoading} selectedRowKeys={selectedRowKeys} setIsLoading={setIsLoading}/>
+            <TableHeaderComponent usersList={studentListState} isLoading={isLoading} selectedRowKeys={selectedRowKeys} setIsLoading={setIsLoading}/>
             <TableElement
-                data={data}
-                setData={setData}
                 rowSelection={rowSelection}
                 tableParams={tableParams}
                 setTableParams={setTableParams}
                 isLoading={isLoading}
-                setIsLoading={setIsLoading}
             />
         </div>
     </>;

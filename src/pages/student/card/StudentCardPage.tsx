@@ -14,17 +14,14 @@ import {getAllFilesByStudentId} from "../../../actions/file";
 
 const StudentCardPage = () => {
     const student_id = useParams().id as string
-    const [studentData, setStudentData] = useState<StudentInterface>(initialStudentState)
     const [isLoading, setIsLoading] = useState(true)
 
-    const studentState = useSelector((state: RootState) => state.student)
     const dispatch = useDispatch()
 
     const fetchData = () => {
         getStudentById(student_id)
             .then((student: StudentInterface) => {
                 dispatch(setCurrentStudent(student))
-                setStudentData(student)
                 setTimeout(() => {
                     setIsLoading(false)
                 }, 500)
@@ -37,7 +34,6 @@ const StudentCardPage = () => {
     return (
         <Layout>
             <StudentCardComponent
-                studentData={studentData}
                 isLoading={isLoading}
                 setIsLoading={setIsLoading}
             />

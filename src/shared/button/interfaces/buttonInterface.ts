@@ -8,5 +8,7 @@ export interface ButtonInterface {
     buttonStyles?: React.CSSProperties;
     textStyles?: React.CSSProperties;
     action?: () => void;
-    isLoading?: boolean
+    isLoading?: boolean,
+    isSubmit?: boolean,
+    disabled?: boolean
 }

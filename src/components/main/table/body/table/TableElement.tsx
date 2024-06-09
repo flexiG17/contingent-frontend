@@ -17,15 +17,14 @@ import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../../../store/store";
 import {setStudentList} from "../../../../../features/studentList/studentSlice";
 
-interface InputProps extends SetStudentDataProps {
+interface InputProps {
     rowSelection: TableRowSelection<StudentInterface>,
 
     tableParams: TableParams,
     setTableParams: Dispatch<SetStateAction<TableParams>>,
     isLoading: boolean,
-    setIsLoading: React.Dispatch<SetStateAction<boolean>>
 }
-export const TableElement = ({rowSelection, tableParams, setTableParams, isLoading, setIsLoading, data, setData}: InputProps) => {
+export const TableElement = ({rowSelection, tableParams, setTableParams, isLoading }: InputProps) => {
     const navigate = useNavigate()
     const handleTableChange: TableProps['onChange'] = (pagination, filters, sorter) => {
         setTableParams({
@@ -33,25 +32,15 @@ export const TableElement = ({rowSelection, tableParams, setTableParams, isLoadi
             filters,
             ...sorter,
         });
-    }
-    const studentListState = useSelector((state: RootState) => state.studentList)
-    const disptach = useDispatch()
 
-    useEffect(() => {
-        getStudents(1, 10)
-            .then((data) => {
-                setIsLoading(false)
-                setTableParams({
-                    pagination: {
-                        pageSize: 10,
-                        total: data.meta.itemCount
-                    }
-                })
-                disptach(setStudentList(data.data))
-                setData(data)
-            })
-            .catch(() => setIsLoading(false))
-    }, [])
+        // `dataSource` is useless since `pageSize` changed
+        if (pagination.pageSize !== tableParams.pagination?.pageSize) {
+            //setData([]);
+        }
+    }
+
+    const studentListState = useSelector((state: RootState) => state.studentList)
+
     return (
         <ConfigProvider
             theme={{
@@ -72,10 +61,10 @@ export const TableElement = ({rowSelection, tableParams, setTableParams, isLoadi
             }
         >
             <Table
+                dataSource={studentListState}
                 rowSelection={rowSelection}
                 columns={GetTableColumns()}
                 rowKey={(record) => record.id}
-                dataSource={studentListState}
                 pagination={tableParams.pagination}
                 onChange={handleTableChange}
                 style={{width: 'auto'}}

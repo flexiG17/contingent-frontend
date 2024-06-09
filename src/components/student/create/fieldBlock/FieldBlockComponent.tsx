@@ -8,8 +8,11 @@ import {MenuItem, TextField} from "@mui/material";
 import {dateTextFieldStyle, textFieldStyle} from "../../../../shared/theme/styles";
 import {InputTypeEnum} from "../../../../shared/input/InputTypeEnum";
 import {StudentInterface} from "../../../../interfaces/student/StudentInterface";
-import {CurrentEducationTypeEnum} from "../../../../enums/currentEducationTypeEnum";
+import {CurrentEducationTypeEnum} from "../../../../enums/currentEducation/currentEducationTypeEnum";
 import {GetEnumLatinKeyByValue} from "../../../../utils/GetEnumLatinKeyByValue";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../../../../store/store";
+import {addNewValue} from "../../../../features/student/studentSlice";
 
 export const GetValueByFieldType = (field: FieldInterface, value: string) => {
     switch (field.type) {
@@ -25,16 +28,13 @@ export const GetValueByFieldType = (field: FieldInterface, value: string) => {
     }
 }
 
-const FieldBlockComponent = ({studentData, section, educationType, setStudentData}: {
-    studentData: StudentInterface,
+const FieldBlockComponent = ({section, educationType}: {
     section: StudentSectionFormInterface,
-    educationType: 'Контракт' | 'Квота',
-    setStudentData: Dispatch<SetStateAction<StudentInterface>>,
+    educationType: CurrentEducationTypeEnum,
 }) => {
-    /*if (studentData[section.key]){
-        console.log(section.key)
-        console.log(studentData[section.key])
-    }*/
+    const studentState = useSelector((state: RootState) => state.student)
+    const dispatch = useDispatch()
+
     return (
         <div className={styles.column_block}>
             <h3>{section.title}</h3>
@@ -53,20 +53,19 @@ const FieldBlockComponent = ({studentData, section, educationType, setStudentDat
                     }
                     return <TextField
                         onChange={(event) => {
-                            setStudentData(prev => {
-                                if (section.key === 'main')
-                                    return {
-                                        ...prev,
-                                        [field.key]: event.target.value
-                                    }
-                                return {
-                                    ...prev,
-                                    [section.key]: {
-                                        ...prev[section.key],
-                                        [field.key]: GetValueByFieldType(field, event.target.value)
-                                    }
-                                }
-                            })
+                            if (section.key === 'main')
+                                dispatch(addNewValue({
+                                    fieldKey: field.key,
+                                    data: GetValueByFieldType(field, event.target.value)
+                                }))
+                            else dispatch(addNewValue({
+                                sectionKey: section.key,
+                                fieldKey: field.key,
+                                data:
+                                    field.type === InputTypeEnum.SELECT
+                                        ? GetEnumLatinKeyByValue(field.enum, event.target.value)
+                                        : GetValueByFieldType(field, event.target.value)
+                            }))
                         }}
                         key={field.key}
                         disabled={field.disabled}

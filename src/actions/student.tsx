@@ -23,7 +23,7 @@ export const createStudent = async (data: StudentInterface) => {
     })
 }
 
-export const getStudentById = async (student_id: string | React.Key)=> {
+export const getStudentById = async (student_id: string | React.Key) => {
     let response = await axios.get(`http://localhost:5000/student/${student_id}`, {
         headers: {
             Authorization: TOKEN,
@@ -45,6 +45,27 @@ export const updateStudentData = async (data: StudentInterface) => {
 
 export const getFilterStruct = () => {
     return axios.get(`http://localhost:5000/system/filter/struct`, {
+        headers: {
+            'Authorization': TOKEN,
+            'Content-Type': 'application/json;charset=utf-8'
+        }
+    })
+}
+
+export const exportStudentList = (idArray: React.Key[] | string[]) => {
+    return axios.get(`http://localhost:5000/system/export/xlsx`, {
+        headers: {
+            'Authorization': TOKEN,
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        responseType: 'blob',
+        params: idArray
+    })
+        .then((response) => response.data)
+}
+
+export const archiveStudent = (student_id: string) => {
+    return axios.patch(`http://localhost:5000/student/?id=${student_id}&is_archived=true`, {},{
         headers: {
             'Authorization': TOKEN,
             'Content-Type': 'application/json;charset=utf-8'

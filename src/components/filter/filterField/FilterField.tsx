@@ -6,15 +6,14 @@ import styles from '../filterBody/filterBody.module.scss'
 
 const FilterField = ({item, columns, setFilterArr, changeFilterProp}: any) => {
     const operators = [
-        {value: 'coincidence', label: 'Содержит'},
+        // {value: 'coincidence', label: 'Содержит'},
         {value: 'equals', label: 'Равно'},
-        {value: 'more', label: 'Больше'},
+        /*{value: 'more', label: 'Больше'},
         {value: 'less', label: 'Меньше'},
         {value: 'moreE', label: 'Больше или равно'},
         {value: 'lessE', label: 'Меньше или равно'},
-        {value: 'range', label: 'Диапазон'}
+        {value: 'range', label: 'Диапазон'}*/
     ];
-
     const [inputType, setInputType] = useState(item.param.type);
 
     const [dateRange, setDateRange] = useState(
@@ -61,12 +60,21 @@ const FilterField = ({item, columns, setFilterArr, changeFilterProp}: any) => {
 
                 <div className={styles.third_parameter}>
                     {/*@ts-ignore*/}
-                    {(!Answers[item.param.value] && item.operator !== 'range') &&
+                    {(!Answers[item.param.value] && item.operator !== 'range' && item.param.type !== 'date') &&
                         <input className={styles.search_filter} type='text'
                                onChange={(e) => {
                                    changeFilterProp(item.id, e.target.value, 'value');
                                }}
-                               value={item.value}/>}
+                               value={item.value}/>
+                    }
+                    {/*@ts-ignore*/}
+                    {(item.param.type === 'date') &&
+                        <input className={styles.search_filter} type='date'
+                               onChange={(e) => {
+                                   changeFilterProp(item.id, new Date(e.target.value), 'value');
+                               }}
+                               value={item.value ? new Date(item.value).toISOString().split('T')[0] : ''}/>
+                    }
                     {/*@ts-ignore*/}
                     {Answers[item.param.value] &&
                         <select className={styles.search_filter} value={item.value}

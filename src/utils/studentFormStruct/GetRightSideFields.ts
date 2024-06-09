@@ -1,5 +1,5 @@
 import {InputTypeEnum} from "../../shared/input/InputTypeEnum";
-import {GenderEnum} from "../../enums/passportEnum";
+import {PassportGenderEnum} from "../../enums/passportEnum";
 import {
     Enrollment1CStatusEnum,
     EnrollmentScholarshipStatusEnum,
@@ -8,7 +8,7 @@ import {
 } from "../../enums/enrollmentEnum";
 import {StudentSectionFormInterface} from "./interfaces/StudentFormFieldInterface";
 import {PaymentStatusEnum, PaymentTypeEnum} from "../../enums/paymentEnum";
-import {CurrentEducationTypeEnum} from "../../enums/currentEducationTypeEnum";
+import {CurrentEducationTypeEnum} from "../../enums/currentEducation/currentEducationTypeEnum";
 import {GetEnumLatinKeyByValue} from "../GetEnumLatinKeyByValue";
 
 const GetRightSideFields = (): StudentSectionFormInterface[] => [
@@ -30,16 +30,16 @@ const GetRightSideFields = (): StudentSectionFormInterface[] => [
             {
                 name: 'Пол',
                 key: 'gender',
-                enum: GenderEnum,
+                enum: PassportGenderEnum,
                 type: InputTypeEnum.SELECT,
                 values: [
                     {
-                        value: GenderEnum.Male,
-                        label: GenderEnum.Male,
+                        value: PassportGenderEnum.Male,
+                        label: PassportGenderEnum.Male,
                     },
                     {
-                        value: GenderEnum.Female,
-                        label: GenderEnum.Female
+                        value: PassportGenderEnum.Female,
+                        label: PassportGenderEnum.Female
                     },
                 ],
                 defaultValue: '',
@@ -241,7 +241,8 @@ const GetRightSideFields = (): StudentSectionFormInterface[] => [
                         label: EnrollmentStatusEnum.Expelled
                     },
                 ],
-                defaultValue: EnrollmentStatusEnum.NotEnrolled,
+                defaultValue: '',
+                // defaultValue: EnrollmentStatusEnum.NotEnrolled,
                 required: false,
                 permission: 'Общий',
                 isStudentCard: false,

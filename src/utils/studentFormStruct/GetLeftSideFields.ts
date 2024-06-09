@@ -1,6 +1,6 @@
 import {InputTypeEnum} from "../../shared/input/InputTypeEnum";
 import {StudentSectionFormInterface} from "./interfaces/StudentFormFieldInterface";
-import {CurrentEducationTypeEnum, FormStudyEnum, StartedLearningEnum} from "../../enums/currentEducationTypeEnum";
+import {CurrentEducationTypeEnum, FormStudyEnum, StartedLearningEnum} from "../../enums/currentEducation/currentEducationTypeEnum";
 import {PaymentStatusEnum, PaymentTypeEnum} from "../../enums/paymentEnum";
 
 const GetLeftSideFields = (): StudentSectionFormInterface[] => [
@@ -303,10 +303,11 @@ const GetLeftSideFields = (): StudentSectionFormInterface[] => [
                     value: CurrentEducationTypeEnum.Quota,
                     label: CurrentEducationTypeEnum.Quota
                 }],
-                defaultValue: CurrentEducationTypeEnum.Contract,
+                defaultValue: '',
+                // defaultValue: CurrentEducationTypeEnum.Contract,
                 required: false,
                 permission: 'Общий',
-                isStudentCard: false,
+                isStudentCard: true,
             },
             {
                 name: 'Форма обучения',
@@ -323,7 +324,8 @@ const GetLeftSideFields = (): StudentSectionFormInterface[] => [
                     value: FormStudyEnum.Hybrid,
                     label: FormStudyEnum.Hybrid
                 }],
-                defaultValue: FormStudyEnum.Offline,
+                defaultValue: '',
+                // defaultValue: FormStudyEnum.Offline,
                 required: false,
                 permission: 'Общий',
                 disabled: false,
@@ -341,7 +343,8 @@ const GetLeftSideFields = (): StudentSectionFormInterface[] => [
                     value: StartedLearningEnum.False,
                     label: StartedLearningEnum.False
                 }],
-                defaultValue: StartedLearningEnum.False,
+                defaultValue: '',
+                // defaultValue: StartedLearningEnum.False,
                 required: false,
                 permission: 'Общий',
                 isStudentCard: false,
@@ -408,7 +411,7 @@ const GetLeftSideFields = (): StudentSectionFormInterface[] => [
             },
         ]
     },
-    {
+    /*{
         title: 'Оплата',
         key: 'payment',
         permission: CurrentEducationTypeEnum.Contract,
@@ -442,7 +445,8 @@ const GetLeftSideFields = (): StudentSectionFormInterface[] => [
                         label: PaymentStatusEnum.NotPaid
                     },
                 ],
-                defaultValue: PaymentStatusEnum.NotPaid,
+                defaultValue: '',
+                // defaultValue: PaymentStatusEnum.NotPaid,
                 required: false,
                 permission: CurrentEducationTypeEnum.Contract,
                 isStudentCard: false,
@@ -497,7 +501,7 @@ const GetLeftSideFields = (): StudentSectionFormInterface[] => [
                 isStudentCard: false,
             },
         ]
-    }
+    }*/
 ]
 
 export default GetLeftSideFields

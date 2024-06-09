@@ -9,10 +9,11 @@ import {
     OutlineFileIcon
 } from "../../../../../assets/Icons";
 import variables from '../../../../../shared/theme/_variables.module.scss'
-import {Button, notification, Popover} from "antd";
+import {App, Button, notification, Popover} from "antd";
 import {CalculateFileSize} from "../../utils/CalculateFileSize";
 import {FileInterface} from "../interfaces/FileInterface";
 import {getOneFileById} from "../../../../../actions/file";
+import {GetNotificationArgs} from "../../../../../utils/notificationArgs";
 
 const FileFieldCardComponent = ({file}: { file: FileInterface }) => {
     const moreInfo = (
@@ -64,21 +65,24 @@ const FileFieldCardComponent = ({file}: { file: FileInterface }) => {
     // ИЗМЕНИТЬ -- загружаются битые файлы
     const handleDownloadFile = () => {
         getOneFileById(file.id)
-            .then((response) => {
-                let url = window.URL.createObjectURL(new Blob([response.data]));
+            .then((fileToDownload) => {
+                let url = window.URL.createObjectURL(fileToDownload);
                 let a = document.createElement('a');
-
                 a.href = url;
                 a.setAttribute('download', file.name);
+
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
                 URL.revokeObjectURL(url);
             })
     }
-
+    const { notification } = App.useApp()
     const handleDeleteFile = () => {
-
+        notification.open(GetNotificationArgs({
+            message: 'Удаление файлов отключено во избежании их потери',
+            type: "error",
+        }))
     }
 
     return (

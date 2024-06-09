@@ -1,6 +1,6 @@
 import {StudentInterface} from "../interfaces/student/StudentInterface";
 import {EnrollmentStatusEnum} from "../enums/enrollmentEnum";
-import {CurrentEducationTypeEnum} from "../enums/currentEducationTypeEnum";
+import {CurrentEducationTypeEnum} from "../enums/currentEducation/currentEducationTypeEnum";
 
 export const StudentsDataToDisplay: StudentInterface[] = [
     {

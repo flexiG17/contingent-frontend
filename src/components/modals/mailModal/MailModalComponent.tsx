@@ -15,11 +15,13 @@ import {lineStyleInTable, systemColor, textFieldStyle} from "../../../shared/the
 import {LetterTemplates} from "../../../utils/const";
 import {Link} from "react-router-dom";
 import {IconFile, IconMail, OutlineFileIcon} from "../../../assets/Icons";
-import {Modal, notification} from "antd";
+import {App, Modal} from "antd";
 import {StudentInterface} from "../../../interfaces/student/StudentInterface";
+import {sendMessage} from "../../../actions/mail";
+import {MailInterface} from "./inetrface/mailInterface";
+import {GetNotificationArgs} from "../../../utils/notificationArgs";
 
 
-const selectedMailsList: any[] = []
 const MailModalComponent = ({open, setOpen, studentsList, selectedRowKeys}:
                                 {
                                     open: boolean,
@@ -38,13 +40,6 @@ const MailModalComponent = ({open, setOpen, studentsList, selectedRowKeys}:
     const [filesToSend, setFilesToSend] = useState<any[]>([]);
     const [sender, setSender] = useState('Информационная система URFUCONTINGENT')
     const [loadingRequest, setLoadingRequest] = useState(false)
-    const [api, contextHolder] = notification.useNotification();
-
-    const openNotificationWithIcon = () => {
-        api['success']({
-            message: 'Рассылка успешно проведена',
-        });
-    };
 
     const handleTypeSelect = (e: any) => {
         setTemplate(e.value);
@@ -58,38 +53,59 @@ const MailModalComponent = ({open, setOpen, studentsList, selectedRowKeys}:
                 selectedMailsList.push(user.first_student_email)
         })
     })*/
+    const {notification} = App.useApp()
 
     const handleSendMail = () => {
-        const dataToSave = new FormData()
-
         setLoadingRequest(true)
         setOpenDialog(false)
-        const arrayToSave = selectedMailsList.filter((value, index, array) => {
-            return array.indexOf(value) === index;
+        const studentsArray: StudentInterface[] = []
+
+        studentsList.map((student) => {
+            selectedRowKeys.map((key) => {
+                if (student.id === key)
+                    studentsArray.push(student)
+            })
         })
-        arrayToSave.map(address => {
-            dataToSave.append('to', address)
+        const addressesToSave: string[] = []
+        studentsArray.map((student) => {
+            addressesToSave.push(student.contact?.first_email!)
         })
-        dataToSave.append('from', sender)
-        dataToSave.append('subject', subject)
-        dataToSave.append('text', text)
-        if (filesToSend)
+        const dataToSend: MailInterface = {
+            from: sender,
+            to: addressesToSave,
+            subject,
+            text,
+        }
+        /*if (filesToSend)
             Object.values(filesToSend).map(file => {
                 dataToSave.append('files', file)
-            })
-        /*sendMessage(dataToSave)
-            .then(() => {
-                setLoadingRequest(false)
-                openNotificationWithIcon()
+            })*/
+        sendMessage(dataToSend)
+            .then((res) => {
+                notification.open(GetNotificationArgs({
+                    message: 'Рассылка успешно произведена',
+                    type: "success",
+                }))
                 setTimeout(() => {
                     window.location.reload()
-                }, 1500)
-            })*/
+                }, 1000)
+                setLoadingRequest(false)
+            })
+            .catch((e) => {
+                console.log(e);
+                // const text = e.response.status === 400 ? 'Проверьте корректность вводимых полей' : `Ошибка сервера ${e.message}`
+                notification.open(GetNotificationArgs({
+                    message: e.message,
+                    type: "error",
+                }))
+            })
+            .finally(() => {
+                setLoadingRequest(false)
+            })
     }
 
     return (
         <ModalWindow open={open} setOpen={setOpen}>
-            {contextHolder}
             <div className={styles.modal_content} onClick={e => e.stopPropagation()}>
                 <div className={styles.container_position}>
                     <div className={styles.title_message_container}>Новое письмо</div>
@@ -165,7 +181,7 @@ const MailModalComponent = ({open, setOpen, studentsList, selectedRowKeys}:
                         />
                     </div>
                     {/*<a className='send_with_other_mail' href={mailtoHref}>Отправить с другой почты</a>*/}
-                    <a className='send_with_other_mail' >Отправить с другой почты</a>
+                    <a className='send_with_other_mail'>Отправить с другой почты</a>
                     <TextField
                         className={styles.input_message_sms}
                         label="Текст письма"
@@ -183,7 +199,7 @@ const MailModalComponent = ({open, setOpen, studentsList, selectedRowKeys}:
                         inputProps={textFieldStyle} InputLabelProps={textFieldStyle}
                         color="warning"
                     />
-                    <label htmlFor="input_students" className={styles.file_input_message}>
+                    {/*<label htmlFor="input_students" className={styles.file_input_message}>
                         {filesToSend === null ? 'Выбрать файл' : `Добавлено ${filesToSend.length} файла`}
                         <input type="file" name='input_students' id='input_students' hidden multiple
                                onChange={e => {
@@ -191,7 +207,7 @@ const MailModalComponent = ({open, setOpen, studentsList, selectedRowKeys}:
                                    setFilesToSend(e.target.files);
                                }}/>
                         <IconFile width={15} style={{textAlign: 'center'}}/>
-                    </label>
+                    </label>*/}
 
                     {loadingRequest
                         ?

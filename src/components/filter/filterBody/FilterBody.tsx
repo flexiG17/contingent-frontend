@@ -6,8 +6,8 @@ import {IconDelete, IconPlus} from "../../../assets/Icons";
 import styles from './filterBody.module.scss'
 import {getFilterStruct, getStudents} from "../../../actions/student";
 import {GetEnumLatinKeyByValue} from "../../../utils/GetEnumLatinKeyByValue";
-import {GenderEnum} from "../../../enums/passportEnum";
-import {CurrentEducationTypeEnum} from "../../../enums/currentEducationTypeEnum";
+import {PassportGenderEnum} from "../../../enums/passportEnum";
+import {CurrentEducationTypeEnum} from "../../../enums/currentEducation/currentEducationTypeEnum";
 import {
     EnrollmentScholarshipStatusEnum,
     EnrollmentStatusEnum,
@@ -36,25 +36,24 @@ const SortColumns = (columns: any[]) => {
     return sortedColumns.sort((a, b) => a.rating - b.rating)
 }
 const FilterBody = ({filters, setFilters}: any) => {
-    const [anchorEl, setAnchorEl] = useState();
+    const [anchorEl, setAnchorEl] = useState<any>();
     const open = Boolean(anchorEl);
 
     const [filterArr, setFilterArr] = useState(filters);
     const [columns, setColumns] = useState([]);
-
     const handleClick = (event: any) => {
         setAnchorEl(event.currentTarget);
     };
     const studentListState = useSelector((state: RootState) => state.studentList)
     const disptach = useDispatch()
 
-    const handleClose = () => {
+    const setParams = () => {
         let object: Record<string, string | Date> = {};
         filterArr.map((filter: any) => {
             let newValue = filter.value
-            switch (filter.param.value){
+            switch (filter.param.value) {
                 case 'gender':
-                    newValue = GetEnumLatinKeyByValue(GenderEnum, filter.value)
+                    newValue = GetEnumLatinKeyByValue(PassportGenderEnum, filter.value)
                     break
                 case 'type':
                     newValue = GetEnumLatinKeyByValue(CurrentEducationTypeEnum, filter.value)
@@ -73,17 +72,32 @@ const FilterBody = ({filters, setFilters}: any) => {
                 ...object,
                 [filter.param.section]: {
                     field: filter.param.value,
-                    value: newValue
+                    value: newValue,
+                    type: filter.param.type
                 }
             }
         })
-        getStudents(1, 10, object)
+
+        return object
+    }
+
+    const fetchData = (params?: typeof filterArr) => {
+        const dataToFilter = params ? params : setParams()
+        getStudents(1, 10, dataToFilter)
             .then((response) => {
                 disptach(setStudentList(response.data))
             })
+    }
+
+    const handleClose = () => {
         // @ts-ignore
         setAnchorEl(null);
     };
+
+    const handleReset = () => {
+        fetchData([])
+        setAnchorEl(null);
+    }
 
     const changeFilterProp = (id: any, value: any, operator: any) => {
         setFilterArr((prevState: any) => {
@@ -98,21 +112,23 @@ const FilterBody = ({filters, setFilters}: any) => {
 
     useEffect(() => {
         getFilterStruct()
-            .then(res =>
-                setColumns(res.data.map((item: any) => {
-                    return {
-                        section: item.section,
-                        value: item.name,
-                        label: item.ru,
-                        type: item.type
-                    }
-                })));
+            .then(res => {
+                    setColumns(res.data.map((item: any) => {
+                        return {
+                            section: item.section,
+                            value: item.name,
+                            label: item.ru,
+                            type: item.type
+                        }
+                    }))
+                }
+            );
     }, []);
 
     return (
         <div>
             <button
-                style={{borderTopRightRadius: 0, borderBottomRightRadius: 0}}
+                // style={{borderTopRightRadius: 0, borderBottomRightRadius: 0}}
                 onClick={handleClick}
             >
                 <p>
@@ -160,7 +176,7 @@ const FilterBody = ({filters, setFilters}: any) => {
                             <button className={styles.add_filter_button} onClick={() => {
                                 setFilterArr([]);
                                 setFilters([]);
-                                handleClose();
+                                handleReset()
                             }}>
                                 Сбросить
                             </button>
@@ -177,6 +193,7 @@ const FilterBody = ({filters, setFilters}: any) => {
                                                 break
                                             } else if (i === filterArr.length - 1) {
                                                 setFilters(filterArr);
+                                                fetchData();
                                                 handleClose();
                                             }
                                         }

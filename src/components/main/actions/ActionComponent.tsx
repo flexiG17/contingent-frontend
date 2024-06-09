@@ -9,8 +9,15 @@ import {InputTypeEnum} from "../../../shared/input/InputTypeEnum";
 import {PageInterface} from "../../../interfaces/table/PageInterface";
 import {StudentInterface} from "../../../interfaces/student/StudentInterface";
 import SetStudentDataProps from "../../../pages/main/SetStudentDataInterface";
+import TableSearchComponent from "./tableSearch/TableSearchComponent";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../../../store/store";
 
-const ActionComponent = ({data, setData} : SetStudentDataProps) => {
+const ActionComponent = () => {
+
+    const studentListState = useSelector((state: RootState) => state.studentList)
+    const dispatch = useDispatch()
+
     return <div className={styles.block}>
         <ButtonComponent
             text={'Добавить студента'}
@@ -24,12 +31,13 @@ const ActionComponent = ({data, setData} : SetStudentDataProps) => {
             textStyles={{fontSize: 14}}
         />
         <nav className={styles.actions}>
-            <FilterComponent data={data} setData={setData}/>
-            <button>
+            <FilterComponent/>
+            {/*<button>
                 <p>
                     Поиск
                 </p>
             </button>
+            <TableSearchComponent/>*/}
         </nav>
     </div>
 }

@@ -2,7 +2,7 @@ import type {PayloadAction} from '@reduxjs/toolkit'
 import {createSlice} from '@reduxjs/toolkit'
 import {StudentInterface} from "../../interfaces/student/StudentInterface";
 import GetRightSideFields from "../../utils/studentFormStruct/GetRightSideFields";
-import {CurrentEducationTypeEnum} from "../../enums/currentEducationTypeEnum";
+import {CurrentEducationTypeEnum} from "../../enums/currentEducation/currentEducationTypeEnum";
 import GetLeftSideFields from "../../utils/studentFormStruct/GetLeftSideFields";
 import {EnrollmentStatusEnum} from "../../enums/enrollmentEnum";
 import {GetEnumLatinKeyByValue} from "../../utils/GetEnumLatinKeyByValue";

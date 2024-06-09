@@ -1,17 +1,19 @@
 import React, {useEffect, useRef, useState} from "react";
 import styles from './studentForm.module.scss'
 import {useNavigate} from "react-router-dom";
-import {notification} from "antd";
+import {App, notification} from "antd";
 import {InputTypeEnum} from "../../../../shared/input/InputTypeEnum";
 import ButtonComponent from "../../../../shared/button/ButtonComponent";
 import {GetStudentFormStructure} from "../../../../utils/studentFormStruct/GetStudentFormStructure";
 import {StudentInterface} from "../../../../interfaces/student/StudentInterface";
 import FieldCardBlockComponent from "../fieldCardBlock/FieldCardBlockComponent";
-import {CurrentEducationTypeEnum} from "../../../../enums/currentEducationTypeEnum";
+import {CurrentEducationTypeEnum} from "../../../../enums/currentEducation/currentEducationTypeEnum";
 import {GetEnumValueByKey} from "../../../../utils/GetEnumValueByKey";
 import {useSelector} from "react-redux";
 import {RootState} from "../../../../store/store";
 import {updateStudentData} from "../../../../actions/student";
+import {GetNotificationArgs} from "../../../../utils/notificationArgs";
+import SubmitModalComponent from "../../../../shared/submitModal/SubmitModalComponent";
 
 const studentStructure = GetStudentFormStructure()
 
@@ -23,21 +25,23 @@ const removeEmptyFields = (data: any) => {
     });
 }
 
-const StudentCardFormComponent = ({studentData, isDisabledField}: {
-    studentData: StudentInterface,
+const StudentCardFormComponent = ({isDisabledField}: {
     isDisabledField: boolean
 }) => {
     const [isLoading, setIsLoading] = useState(false)
     const [educationType, setEducationType] = useState<CurrentEducationTypeEnum>(CurrentEducationTypeEnum.Contract)
+    const [isSubmit, setIsSubmit] = useState<boolean>(false)
 
     useEffect(() => {
-        setEducationType(GetEnumValueByKey(CurrentEducationTypeEnum, studentData.current_education!.type!))
+        setEducationType(GetEnumValueByKey(CurrentEducationTypeEnum, studentState.current_education!.type!))
     }, []);
 
     const studentState = useSelector((state: RootState) => state.student)
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        // setIsLoading(true)
-        event.preventDefault();
+    const {notification} = App.useApp()
+    // const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = () => {
+        setIsLoading(true)
+        // event.preventDefault();
 
         const obj: StudentInterface = {
             ...studentState,
@@ -70,7 +74,21 @@ const StudentCardFormComponent = ({studentData, isDisabledField}: {
         }
         updateStudentData(obj)
             .then((res) => {
+                notification.open(GetNotificationArgs({
+                    message: 'Студент успешно изменён',
+                    type: "success",
+                }))
+                setTimeout(() => {
+                    window.location.reload()
+                }, 1000)
                 setIsLoading(false)
+            })
+            .catch((e) => {
+                const text = e.response.status === 400 ? 'Проверьте корректность вводимых полей' : `Ошибка сервера ${e.message}`
+                notification.open(GetNotificationArgs({
+                    message: text,
+                    type: "error",
+                }))
             })
             .finally(() => {
                 setIsLoading(false)
@@ -86,7 +104,7 @@ const StudentCardFormComponent = ({studentData, isDisabledField}: {
     }*/
 
     return (
-        <form onSubmit={handleSubmit} style={{width: '100%'}}>
+        <div style={{width: '100%'}}>
             <section className={styles.grid}>
                 <div className={styles.column}>
                     {studentStructure.leftSideFields().map((section) => {
@@ -94,9 +112,9 @@ const StudentCardFormComponent = ({studentData, isDisabledField}: {
                             return <FieldCardBlockComponent
                                 key={section.key}
                                 fieldData={section.key === 'main' ? {
-                                    latin_name: studentData.latin_name,
-                                    russian_name: studentData.russian_name
-                                }: studentData[section.key]}
+                                    latin_name: studentState.latin_name,
+                                    russian_name: studentState.russian_name
+                                } : studentState[section.key]}
                                 // studentData={studentData}
                                 educationType={educationType!}
                                 section={section}
@@ -111,10 +129,9 @@ const StudentCardFormComponent = ({studentData, isDisabledField}: {
                             return <FieldCardBlockComponent
                                 key={section.key}
                                 fieldData={section.key === 'main' ? {
-                                    latin_name: studentData.latin_name,
-                                    russian_name: studentData.russian_name
-                                }: studentData[section.key]}
-                                // studentData={studentData}
+                                    latin_name: studentState.latin_name,
+                                    russian_name: studentState.russian_name
+                                } : studentState[section.key]}
                                 educationType={educationType!}
                                 section={section}
                                 isDisabledField={isDisabledField}
@@ -122,24 +139,28 @@ const StudentCardFormComponent = ({studentData, isDisabledField}: {
                     })}
                 </div>
             </section>
-            {/*{isFileModalOpen &&
-                <Suspense fallback={<SpinComponent isLoading={true}/>}>
-                    <CreateFileModalComponent open={isFileModalOpen} setOpen={setIsFileModalOpen}
-                                              student_id={studentData.id}/>
-                </Suspense>
-            }*/}
             <div className={styles.button}>
-                {/*<OutlineFileIcon
-                    className={styles.file}
-                    onClick={() => setIsFileModalOpen(prevState => !prevState)}
-                />*/}
-                <ButtonComponent
-                    isLoading={isLoading}
-                    textStyles={{fontSize: '16px'}}
-                    buttonStyles={{width: '20%'}}
-                    text={'Сохранить'}/>
+                {isSubmit &&
+                    <SubmitModalComponent
+                        isDeleteModalOpen={isSubmit} setIsDeleteModalOpen={setIsSubmit}
+                        title={'Изменение данных'}
+                        action={handleSubmit}
+                        text={
+                            <span>Вы уверены, что хотите изменить данные <strong>{studentState.russian_name}</strong>?</span>
+                        }/>
+                }
+                <div style={{width: '100%', display: "flex", justifyContent: 'center'}} onClick={() => setIsSubmit(true)}>
+                    <ButtonComponent
+                        disabled={isDisabledField}
+                        isLoading={isLoading}
+                        textStyles={{fontSize: '16px'}}
+                        buttonStyles={{width: '20%'}}
+                        text={'Изменить'}
+                        isSubmit={false}
+                    />
+                </div>
             </div>
-        </form>
+        </div>
     )
 }
 

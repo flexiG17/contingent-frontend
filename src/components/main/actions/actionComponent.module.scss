@@ -16,6 +16,7 @@ $action-border-radius: 8px;
     background: none;
     cursor: pointer;
     transition: 0.3s;
+    border-radius: $action-border-radius;
 
     p {
       font-size: 16px;
@@ -28,7 +29,7 @@ $action-border-radius: 8px;
     background: $background-color-hover;
   }
 
-  button:first-child {
+  /*button:first-child {
     border-top-left-radius: $action-border-radius;
     border-bottom-left-radius: $action-border-radius;
     border-right: none;
@@ -37,5 +38,5 @@ $action-border-radius: 8px;
   button:last-child {
     border-top-right-radius: $action-border-radius;
     border-bottom-right-radius: $action-border-radius;
-  }
+  }*/
 }

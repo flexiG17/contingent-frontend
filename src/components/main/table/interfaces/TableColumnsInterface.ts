@@ -2,8 +2,8 @@ import React from "react";
 import {StudentInterface} from "../../../../interfaces/student/StudentInterface";
 import {EnrollmentStatusEnum} from "../../../../enums/enrollmentEnum";
 import {PaymentStatusEnum} from "../../../../enums/paymentEnum";
-import {GenderEnum} from "../../../../enums/passportEnum";
-import {FormStudyEnum} from "../../../../enums/currentEducationTypeEnum";
+import {PassportGenderEnum} from "../../../../enums/passportEnum";
+import {CurrentEducationTypeEnum, FormStudyEnum} from "../../../../enums/currentEducation/currentEducationTypeEnum";
 
 export interface TableColumnsInterface extends StudentInterface{
     id: React.Key;
@@ -13,6 +13,7 @@ export interface TableColumnsInterface extends StudentInterface{
     status: EnrollmentStatusEnum,
 
     current_education: {
+        type: CurrentEducationTypeEnum,
         form_study: FormStudyEnum
     },
     educational_program: string;
@@ -20,7 +21,7 @@ export interface TableColumnsInterface extends StudentInterface{
     russian_name: string;
     passport : {
         country: string;
-        gender: GenderEnum;
+        gender: PassportGenderEnum;
     },
     contract_number: string;
     payment: {

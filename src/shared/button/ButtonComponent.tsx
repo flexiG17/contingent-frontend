@@ -5,14 +5,13 @@ import {ButtonInterface} from "./interfaces/buttonInterface";
 import {Spin} from "antd";
 import SpinComponent from "../spin/SpinComponent";
 
-const ButtonComponent = ({text, icon, buttonStyles, textStyles, navigatePath, isLoading}: ButtonInterface) => {
+const ButtonComponent = ({text, icon, buttonStyles, textStyles, navigatePath, isLoading, isSubmit= true, disabled}: ButtonInterface) => {
     const navigate = useNavigate();
 
     return (
         <button
             className={styles.button}
-            type='submit'
-            disabled={isLoading}
+            disabled={isLoading || disabled}
             style={{...buttonStyles}}
             onClick={() => {
                 navigate(navigatePath!)

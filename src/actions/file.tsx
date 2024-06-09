@@ -24,10 +24,12 @@ export const getAllFilesByStudentId = async (student_id: string) => {
 export const getOneFileById = async (file_id: string) => {
     return await axios.get(`http://localhost:5000/file/single/${file_id}`, {
         headers: {
-            Authorization: TOKEN,
-            responseType: 'blob'
+            'Authorization': TOKEN,
+            'Content-Type': 'application/json;charset=utf-8'
         },
+        responseType: 'blob',
     })
+        .then((response) => response.data)
 }
 /*
 export const uploadFiles = async (files: any) => {

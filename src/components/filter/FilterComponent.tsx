@@ -4,7 +4,7 @@ import {StudentInterface} from "../../interfaces/student/StudentInterface";
 import {PageInterface} from "../../interfaces/table/PageInterface";
 import SetStudentDataProps from "../../pages/main/SetStudentDataInterface";
 
-const FilterComponent = ({data, setData} : SetStudentDataProps) => {
+const FilterComponent = () => {
     const [filters, setFilters] = useState([]);
     /*const multiFilter = (item: any) => {
         for (let i = 0; i < filters.length; i++) {

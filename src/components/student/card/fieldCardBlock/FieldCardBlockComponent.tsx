@@ -8,7 +8,7 @@ import {MenuItem, TextField} from "@mui/material";
 import {dateTextFieldStyle, textFieldStyle} from "../../../../shared/theme/styles";
 import {InputTypeEnum} from "../../../../shared/input/InputTypeEnum";
 import {StudentInterface} from "../../../../interfaces/student/StudentInterface";
-import {CurrentEducationTypeEnum} from "../../../../enums/currentEducationTypeEnum";
+import {CurrentEducationTypeEnum} from "../../../../enums/currentEducation/currentEducationTypeEnum";
 import {addNewValue, initialStudentState} from "../../../../features/student/studentSlice";
 import {UserInterface} from "../../../../interfaces/UserInterface";
 import {GetEnumValueByKey} from "../../../../utils/GetEnumValueByKey";
@@ -16,10 +16,12 @@ import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../../store/store";
 import {GetEnumLatinKeyByValue} from "../../../../utils/GetEnumLatinKeyByValue";
 
-const GetValueByFieldType = (field: FieldInterface, value: string | UserInterface) => {
+const GetValueByFieldType = (field: FieldInterface, value: string | UserInterface, defaultValue?: boolean) => {
     switch (field.type) {
         case InputTypeEnum.DATE: {
-            return value ? new Date(value as string).toISOString().split('T')[0] : ''
+            return defaultValue
+                ? value ? new Date(value as string).toISOString().split('T')[0] : ''
+                : new Date(value as string)
         }
         case InputTypeEnum.SELECT: {
             return GetEnumValueByKey(field.enum, value as string)
@@ -45,7 +47,6 @@ const FieldCardBlockComponent = ({fieldData, section, educationType, isDisabledF
         console.log(section.key)
         console.log(studentData[section.key])
     }*/
-    const [s, setStudentData] = useState<StudentInterface>(initialStudentState)
     const studentState = useSelector((state: RootState) => state.student)
     const dispatch = useDispatch()
 
@@ -79,7 +80,7 @@ const FieldCardBlockComponent = ({fieldData, section, educationType, isDisabledF
                                 data:
                                     field.type === InputTypeEnum.SELECT
                                         ? GetEnumLatinKeyByValue(field.enum, event.target.value)
-                                        : GetValueByFieldType(field, event.target.value)
+                                        : GetValueByFieldType(field, event.target.value, true)
                             }))
                         }}
                         key={field.key}
@@ -92,7 +93,10 @@ const FieldCardBlockComponent = ({fieldData, section, educationType, isDisabledF
                         type={field.type}
                         select={field.type === InputTypeEnum.SELECT}
                         required={field.required}
-                        defaultValue={section.key === 'main' ? fieldData[field.key] : (GetValueByFieldType(field, fieldData[field.key]))}
+                        defaultValue={
+                            section.key === 'main'
+                                ? fieldData[field.key]
+                                : (GetValueByFieldType(field, fieldData[field.key], true))}
                         size="small"
                     >
                         {field.values.map((option) => (

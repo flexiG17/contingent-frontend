@@ -2,7 +2,7 @@ import type {PayloadAction} from '@reduxjs/toolkit'
 import {createSlice} from '@reduxjs/toolkit'
 import {StudentInterface} from "../../interfaces/student/StudentInterface";
 import GetRightSideFields from "../../utils/studentFormStruct/GetRightSideFields";
-import {CurrentEducationTypeEnum} from "../../enums/currentEducationTypeEnum";
+import {CurrentEducationTypeEnum} from "../../enums/currentEducation/currentEducationTypeEnum";
 import GetLeftSideFields from "../../utils/studentFormStruct/GetLeftSideFields";
 import {EnrollmentStatusEnum} from "../../enums/enrollmentEnum";
 import {GetEnumLatinKeyByValue} from "../../utils/GetEnumLatinKeyByValue";
@@ -42,22 +42,29 @@ export const initialStudentState: StudentInterface = {
     russian_name: '',
     latin_name: 'student name',
     enrollment: {
-        status: GetEnumLatinKeyByValue(EnrollmentStatusEnum, EnrollmentStatusEnum.NotEnrolled)
+        // status: GetEnumLatinKeyByValue(EnrollmentStatusEnum, EnrollmentStatusEnum.NotEnrolled)
+        status: undefined,
+        contract_number: undefined,
+        order_number: undefined,
     },
     metadata: {created_at: new Date()},
     current_education: {
-        type: GetEnumLatinKeyByValue(CurrentEducationTypeEnum, CurrentEducationTypeEnum.Contract),
-        educational_programs: {
+        // type: GetEnumLatinKeyByValue(CurrentEducationTypeEnum, CurrentEducationTypeEnum.Contract),
+        type: undefined,
+        educational_programs: [{
             hours_number: undefined
-        },
+        }],
         form_study: undefined,
-        started_learning: undefined
+        started_learning: undefined,
     },
     passport: {
         country: undefined,
     },
     payment: {
-        payment_status: undefined
+        payment_status: undefined,
+        /*student_payments: {
+            amount: 0
+        }*/
     },
     contact: {},
     agent: {},

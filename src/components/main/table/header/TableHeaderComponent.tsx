@@ -4,10 +4,12 @@ import variables from "../../../../../src/shared/theme/_variables.module.scss";
 import {IconDelete, IconExport, IconFile, IconMail, IconPlus} from "../../../../assets/Icons";
 import ButtonComponent from "../../../../shared/button/ButtonComponent";
 import {set} from "react-hook-form";
-import {notification} from "antd";
+import {App, notification} from "antd";
 import MailModalComponent from "../../../modals/mailModal/MailModalComponent";
 import {PageInterface} from "../../../../interfaces/table/PageInterface";
 import {StudentInterface} from "../../../../interfaces/student/StudentInterface";
+import {archiveStudent, exportStudentList} from "../../../../actions/student";
+import {GetNotificationArgs} from "../../../../utils/notificationArgs";
 
 interface InputProps {
     selectedRowKeys: React.Key[],
@@ -17,22 +19,47 @@ interface InputProps {
 }
 const TableHeaderComponent = ({selectedRowKeys, setIsLoading, isLoading, usersList}: InputProps) => {
     const isSelected = selectedRowKeys.length > 0
-    const [api, contextHolder] = notification.useNotification();
     const [isOpenMailModal, setIsOpenMailModal] = useState(false)
 
-    const openNotificationWithIcon = () => {
-        api['success']({
-            message: 'Студенты удалены',
-        });
-    };
-
+    const { notification } = App.useApp()
     const handleDeleteStudents = () => {
         setIsLoading(true)
-
+        archiveStudent(selectedRowKeys[0].toString())
+            .then((response) => {
+                setIsLoading(false)
+                notification.open(GetNotificationArgs({
+                    message: 'Студент успешно архивирован',
+                    type: "success",
+                }))
+                setTimeout(() => {
+                    window.location.reload()
+                }, 1000)
+            })
+            .catch((e) => {
+                setIsLoading(false)
+                notification.open(GetNotificationArgs({
+                    message: `Ошибка сервера ${e.message}`,
+                    type: "error",
+                }))
+            })
     }
 
     const handleDownload = () => {
         setIsLoading(true)
+        exportStudentList(selectedRowKeys)
+            .then((file) => {
+                let url = window.URL.createObjectURL(file);
+                let a = document.createElement('a');
+                a.href = url;
+                a.setAttribute('download', `Выгрузка от ${new Date().toLocaleDateString()}.xlsx`);
+
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+
+                setIsLoading(false)
+            })
         /*createXlsx(selectedRowKeys)
             .then(response => {
                 let url = window.URL.createObjectURL(response.data);
@@ -60,7 +87,6 @@ const TableHeaderComponent = ({selectedRowKeys, setIsLoading, isLoading, usersLi
             style={isSelected ? {background: variables.backgroundColor} : {}}
         >
             <MailModalComponent selectedRowKeys={selectedRowKeys} open={isOpenMailModal} setOpen={setIsOpenMailModal} studentsList={usersList}/>
-            {contextHolder}
             {isSelected
                 ?
                 <div className={styles.block}>

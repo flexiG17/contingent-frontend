@@ -1,9 +1,9 @@
 import {EducationalProgramInterface} from "./EducationalProgramInterface";
-import {CurrentEducationTypeEnum} from "../../../enums/currentEducationTypeEnum";
+import {CurrentEducationTypeEnum} from "../../../enums/currentEducation/currentEducationTypeEnum";
 
 export interface CurrentEducationInterface {
     id?: string,
-    type?: CurrentEducationTypeEnum,
+    type?: CurrentEducationTypeEnum | '',
     form_study?: string,
     started_learning?: string,
     date_started_learning?: Date,
@@ -14,5 +14,5 @@ export interface CurrentEducationInterface {
     organization?: string,
     educational_program_id?: string,
     student_id?: string,
-    educational_programs?: EducationalProgramInterface
+    educational_programs?: EducationalProgramInterface[]
 }

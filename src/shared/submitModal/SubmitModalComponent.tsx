@@ -8,7 +8,7 @@ interface InputProps {
     isDeleteModalOpen: boolean,
     title: string,
     setIsDeleteModalOpen: Dispatch<SetStateAction<boolean>>,
-    action: () => void,
+    action: (e?: any) => void,
     text: ReactNode
 }
 
@@ -16,6 +16,11 @@ const SubmitModalComponent = (props: InputProps) => {
     return (
         <ConfigProvider
             theme={{
+                components: {
+                    Modal: {
+                        titleColor: variables.primaryColor
+                    }
+                },
                 token: {
                     colorPrimaryBorder: 'red'
                 }
@@ -23,7 +28,11 @@ const SubmitModalComponent = (props: InputProps) => {
         >
             <Modal
                 style={{top: '40%', display: 'flex'}}
-                title={props.title} open={props.isDeleteModalOpen} onOk={props.action}
+                title={props.title} open={props.isDeleteModalOpen}
+                onOk={() => {
+                    props.action()
+                    props.setIsDeleteModalOpen(false)
+                }}
                 onCancel={() => props.setIsDeleteModalOpen(false)}
                 cancelText={'Отмена'}
             >
